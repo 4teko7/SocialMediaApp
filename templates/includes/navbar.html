@@ -1,0 +1,108 @@
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static 'css/navbar/navbar.css' %}">
+<!------ Include the above in your HEAD tag ---------->
+
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">
+          <i class="fa fa-home"></i>
+          Main Page
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/todos/">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-danger">11</span>
+          </i>
+          My Todos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="/users/myarticles/">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-warning">11</span>
+          </i>
+          My Articles
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/about/">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-danger">11</span>
+          </i>
+          About
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/alltodos/">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-danger">11</span>
+          </i>
+          All Todos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/allarticles/">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-danger">11</span>
+          </i>
+          All Articles
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-primary">11</span>
+          </i>
+          Login-Register
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/users/register/">Register</a>
+          <a class="dropdown-item" href="/users/login/">Login</a>
+          <!-- <div class="dropdown-divider"></div> -->
+          <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/logout/">
+          <i class="fa fa-envelope-o">
+            <span class="badge badge-danger">11</span>
+          </i>
+          Logout
+        </a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ">
+      <li class="nav-item">
+        <a class="nav-link" href="/articles/addarticle/">
+          <i class="fa fa-bell">
+            <span class="badge badge-info">11</span>
+          </i>
+          Add Article
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/todos/addtodo/">
+          <i class="fa fa-globe">
+            <span class="badge badge-success">11</span>
+          </i>
+          Add Todo
+        </a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>

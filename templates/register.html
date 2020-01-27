@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container">
+
+<h1>Register</h1>
+<hr>
+<form action="/users/register/" method = "POST">
+{% csrf_token %}
+    {{form.as_p}}
+    <button type = "submit" class ="btn btn-danger">Register</button>
+</form>
+
+</div>
+{% endblock body %}

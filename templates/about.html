@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class = "container" style = "margin-top:20px;">
+<h3>ABOUT</h3>
+{% if name == "Bilal" %}
+    {{name}}
+{% endif %}
+
+{% for i in numbers %}
+<p>{{i}}</p> 
+{% endfor %}
+<hr>
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim iste perspiciatis quae. Suscipit quo recusandae itaque ipsam vero tempore aliquam, iure veritatis debitis minus possimus at. Dolores optio culpa iusto.
+</div>
+{% endblock body %}
