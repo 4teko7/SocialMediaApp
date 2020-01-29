@@ -34,7 +34,6 @@ def registerUser(req):
         else:
             return render(req,"register.html",context)
     else:
-        
         return render(req,"register.html",context)
 
    
@@ -63,4 +62,5 @@ def loginUser(req):
         return render(req,"login.html",context)
 def logoutUser(req):
     logout(req)
+    messages.success(req,"Logged Out Successfully")
     return redirect("mainPage")
