@@ -5,7 +5,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">TEKO</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -23,7 +23,7 @@
     <li class="nav-item">
         <a class="nav-link" href="/todos/mytodos/">
           <i class="fa fa-envelope-o">
-            <span class="badge badge-danger">11</span>
+            <span class="badge badge-danger">{{myTodos}}</span>
           </i>
           My Todos
         </a>
@@ -31,7 +31,7 @@
 <li class="nav-item">
         <a class="nav-link " href="/articles/myarticles/">
           <i class="fa fa-envelope-o">
-            <span class="badge badge-warning">11</span>
+            <span class="badge badge-warning">{{myArticles}}</span>
           </i>
           My Articles
         </a>
@@ -39,7 +39,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/users/about/">
           <i class="fa fa-envelope-o">
-            <span class="badge badge-danger">11</span>
           </i>
           About
         </a>
@@ -48,7 +47,6 @@
   <li class="nav-item">
         <a class="nav-link" href="/users/logout/">
           <i class="fa fa-envelope-o">
-            <span class="badge badge-danger">11</span>
           </i>
           Logout
         </a>
@@ -70,7 +68,6 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-envelope-o">
-            <span class="badge badge-primary">11</span>
           </i>
           Login-Register
         </a>
@@ -90,7 +87,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/articles/addarticle/">
           <i class="fa fa-bell">
-            <span class="badge badge-info">11</span>
           </i>
           Add Article
         </a>
@@ -98,7 +94,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/todos/addtodo/">
           <i class="fa fa-globe">
-            <span class="badge badge-success">11</span>
           </i>
           Add Todo
         </a>
@@ -107,7 +102,7 @@
   <li class="nav-item">
         <a class="nav-link" href="/articles/allarticles/">
           <i class="fa fa-envelope-o">
-            <span class="badge badge-danger">11</span>
+            <span class="badge badge-danger">{{allArticles}}</span>
           </i>
           All Articles
         </a>

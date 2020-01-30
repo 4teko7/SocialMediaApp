@@ -17,8 +17,24 @@ from __future__ import unicode_literals
 from django.conf.urls import url,include
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import admin
+from article.models import Article
+from todo.models import Todo
+
+
 def mainPage(req):
-    return render(req,"index.html")
+    if(req.user.is_authenticated):
+        allArticles = len(Article.objects.all())
+        myTodos = len(Todo.objects.filter(author = req.user))
+        myArticles = len(Article.objects.filter(author = req.user))
+
+        context = {
+            "allArticles":allArticles,
+            "myTodos":myTodos,
+            "myArticles":myArticles
+        }
+    else:
+        context = {}
+    return render(req,"index.html",context)
     
 urlpatterns = [
     url(r'admin/', admin.site.urls),

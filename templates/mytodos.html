@@ -1,61 +1,75 @@
-{% extends 'layout.html' %}        
+{% extends 'layout.html' %}
 {% load static %}
 
-                   {% block body %}
+{% block body %}
 
-                       <div class="container" style = "">
-                 <div class="col-md-12 col-xs-12 col-lg-12 ">
-                <div style = "margin-top:1rem; margin-bottom:2rem;" >
-                   
-                    <h1 style="text-align: center; font-size:2.5rem;">My Todos</h1>
-                    <p style="font-size: 1.5rem;font-weight: bold;  position:absolute; right : 2rem; top:2.3rem;" class = " pull-right">{{date}}</p>
-            
+<div class="container" style="">
+    <div class="col-md-12 col-xs-12 col-lg-12 ">
+        <div style="margin-top:1rem; margin-bottom:2rem;">
+
+            <h1 style="text-align: center; font-size:2.5rem;">My Todos</h1>
+            <p style="font-size: 1.5rem;font-weight: bold;  position:absolute; right : 2rem; top:2.3rem;"
+                class=" pull-right">{{date}}</p>
+
+        </div>
+
+        <hr style="background-color: red;">
+
+
+
+        {% for todo in todos  %}
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-xs-12">
+                <strong>Date : </strong> {{todo.date}}
+
+
+
+
+                {% if todo.iscompleted %}
+
+                <img class=" pull-right" style="width:3rem; height:3rem; ;" src={% static 'img/icon-yes.svg' %}>
+                {% else %}
+
+                <img class=" pull-right" style="width:3rem; height:3rem;;" src={% static 'img/icon-no.svg' %}>
+
+                {% endif %}
+                <br>
+                <div style="display:inline; word-wrap: break-word;">
+                    <strong>Content : </strong>{{todo.content}}
                 </div>
+                <form action="/todos/completetodo/" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value={{todo.id}}>
+                    {% if not todo.iscompleted %}
+                    <button type="submit" class="btn btn-success pull-right"
+                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">Complete</button>
+                    {% else %}
 
-                    <hr style = "background-color: red;">
+
+                    <button type="submit" class="btn btn-warning pull-right"
+                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">Undo</button>
 
 
+                    {% endif %}
+                </form>
+                {% if todo.iscompleted %}
 
-                    {% for todo in todos  %}
-                        <div class = "row">
-                        <div class = "col-md-12 col-lg-12 col-xs-12">
-                        <strong>Date : </strong> {{todo.date}}
-
-                        
-                        
-                        
-                            {% if todo.iscompleted %}   
-                        
-                        <img class = " pull-right" style = "width:3rem; height:3rem; ;" src = {% static 'img/icon-yes.svg' %}>
-                            {% else %}
-                        
-                        <img class = " pull-right"  style = "width:3rem; height:3rem;;" src = {% static 'img/icon-no.svg' %}>
-                        
-                        {% endif %}
-                         <br>
-                        <div style = "display:inline; word-wrap: break-word;">
-                        <strong>Content : </strong>{{todo.content}}
-                        </div>
-                        <form action = "/todos/completetodo/" method = "POST">
+                <form action="/todos/deletetodo/{{todo.id}}/" method="POST">
                         {% csrf_token %}
-                       <input type = "hidden" name = "id" value = {{todo.id}}>
-                            {% if not todo.iscompleted %}   
-                            <button type = "submit" class = "btn btn-success pull-right"  style = "color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">Complete</button>
-                            {% else %}
-                            <button type = "submit" class = "btn btn-danger pull-right"  style = "color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">Undo</button>
+                    <button type="submit" class="btn btn-danger pull-right"
+                        style="color:white; margin-top:1rem; margin-right:0.3rem;font-size:0.7rem; font-weight:bolder; width:5rem;">Delete</button>
+                </form>
+                {% endif %}
 
-                        {% endif %}
+            </div>
 
-                            </form>
-                        </div>
-                        
-                        </div>
+        </div>
 
-                    <hr style = "background-color: red;">
-                            
+        <hr style="background-color: red;">
 
-                    {% endfor %}
-                        </div>
-                             </div>
 
-                {% endblock body %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock body %}
