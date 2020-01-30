@@ -51,6 +51,9 @@ def registerUser(req):
             messages.success(req,"Successfully Registered.")
             return redirect("mainPage")
         else:
+            username = User.objects.filter(username = req.user.username)
+            if(username):
+                messages.warning(req,"Username Exists")
             return render(req,"register.html",context)
     else:
         return render(req,"register.html",context)

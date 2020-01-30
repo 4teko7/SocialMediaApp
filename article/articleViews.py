@@ -6,6 +6,8 @@ from django.contrib import messages
 from .articleForms import *
 from .models import Article
 from todo.models import Todo
+from comment.models import Comment
+from comment.commentForms import *
 
 context = {}
 allArticles = 0
@@ -69,10 +71,16 @@ def myArticles(req):
 
 
 def articleDetail(req,id):
+    commentForm = CommentForm()
     check(req)
     article = Article.objects.filter(id = id)
+    comments = Comment.objects.filter(article = article)
+    commets = comments.order_by('createdDate')
+    comments = comments[::-1]
     global context
     context['article'] = article[0]
+    context['commentForm'] = commentForm
+    context['comments'] = comments
     return render(req,"articledetail.html",context)
     # return HttpResponseRedirect('/articles/myarticles/')
 def allArticles(req):

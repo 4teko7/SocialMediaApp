@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'article',
     'users',
     'todo',
+    'comment',
     'crispy_forms',
 ]
 

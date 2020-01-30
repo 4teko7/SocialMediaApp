@@ -20,6 +20,7 @@ from django.contrib import admin
 from article.models import Article
 from todo.models import Todo
 
+
 context = {}
 allArticles = 0
 myTodos = 0
@@ -68,5 +69,6 @@ urlpatterns = [
     url("articles/",include("article.articleRoutes")),
     url("todos/",include("todo.todoRoutes")),
     url('search/',search,name = 'search'),
+    url('comments/',include('comment.commentRoutes')),
     url("",mainPage,name="mainPage")
 ]
