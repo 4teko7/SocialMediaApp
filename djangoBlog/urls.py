@@ -23,7 +23,8 @@ def mainPage(req):
 urlpatterns = [
     url(r'admin/', admin.site.urls),
     url('users/', include("users.userRoutes")),
-    url("article/",include("article.articleRoutes")),
+    url("articles/",include("article.articleRoutes")),
+    url("todos/",include("todo.todoRoutes")),
     url("",mainPage,name="mainPage")
 ]
 

@@ -5,4 +5,7 @@ app_name = "articleroutes"
 
 urlpatterns = [
     url("detail/(?P<id>\d+)/",detail,name = "detail"),
+    url("addarticle/",addArticle,name = "addarticle"),
+
+
 ]

@@ -5,6 +5,8 @@
 
 
 <div class="jumbotron">
-    Welcome
+
+    Welcome, {% if request.user.is_authenticated %} {{ request.user.username }} {% else %} Our Website {% endif %}
+
 </div>
 {% endblock body %}

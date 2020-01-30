@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 
-from .forms import *
+from .userForms import *
 def about(req):
     context = {
         "name":"Bilal",

@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col align-self-center">
+        <h1>Add Todo</h1>
+            <hr>
+            <form action="/todos/addtodo/" method="POST">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-danger">Add Todo</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock body %}
