@@ -20,27 +20,53 @@ from django.contrib import admin
 from article.models import Article
 from todo.models import Todo
 
+context = {}
+allArticles = 0
+myTodos = 0
+myArticles = 0
 
-def mainPage(req):
+def mainPage(req): 
+    check(req)
+    return render(req,"index.html",context)
+    
+
+
+def search(req):
+    keywords = req.GET.get('keywords')
+    if(keywords):
+        articles = Article.objects.filter(title__contains = keywords)
+        global context
+        context['articles'] = articles
+        return render(req,'allarticles.html',context)
+
+def check(req):
+    global context
     if(req.user.is_authenticated):
-        allArticles = len(Article.objects.all())
-        myTodos = len(Todo.objects.filter(author = req.user))
-        myArticles = len(Article.objects.filter(author = req.user))
-
+        allInfo(req)
         context = {
             "allArticles":allArticles,
             "myTodos":myTodos,
             "myArticles":myArticles
-        }
+             }
     else:
         context = {}
-    return render(req,"index.html",context)
-    
+
+
+def allInfo(req):
+    global allArticles
+    global myTodos
+    global myArticles
+    allArticles = len(Article.objects.all())
+    myTodos = len(Todo.objects.filter(author = req.user))
+    myArticles = len(Article.objects.filter(author = req.user))
+
+
+
 urlpatterns = [
     url(r'admin/', admin.site.urls),
     url('users/', include("users.userRoutes")),
     url("articles/",include("article.articleRoutes")),
     url("todos/",include("todo.todoRoutes")),
+    url('search/',search,name = 'search'),
     url("",mainPage,name="mainPage")
 ]
-

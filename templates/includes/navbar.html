@@ -22,7 +22,7 @@
       {% if request.user.is_authenticated %}
     <li class="nav-item">
         <a class="nav-link" href="/todos/mytodos/">
-          <i class="fa fa-envelope-o">
+          <i class="fa fa-bell">
             <span class="badge badge-danger">{{myTodos}}</span>
           </i>
           My Todos
@@ -30,7 +30,7 @@
       </li>
 <li class="nav-item">
         <a class="nav-link " href="/articles/myarticles/">
-          <i class="fa fa-envelope-o">
+          <i class="fa fas fa-envelope">
             <span class="badge badge-warning">{{myArticles}}</span>
           </i>
           My Articles
@@ -38,7 +38,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/users/about/">
-          <i class="fa fa-envelope-o">
+          <i style= "" class="fa fas fa-user">
           </i>
           About
         </a>
@@ -46,7 +46,7 @@
       
   <li class="nav-item">
         <a class="nav-link" href="/users/logout/">
-          <i class="fa fa-envelope-o">
+          <i class="fa fas fa-power-off">
           </i>
           Logout
         </a>
@@ -86,14 +86,14 @@
     
       <li class="nav-item">
         <a class="nav-link" href="/articles/addarticle/">
-          <i class="fa fa-bell">
+          <i class="fa fas fa-plus">
           </i>
           Add Article
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/todos/addtodo/">
-          <i class="fa fa-globe">
+          <i class="fa fas fa-calendar-check">
           </i>
           Add Todo
         </a>
@@ -101,15 +101,15 @@
   {% endif %}
   <li class="nav-item">
         <a class="nav-link" href="/articles/allarticles/">
-          <i class="fa fa-envelope-o">
+          <i class="fa fa-globe">
             <span class="badge badge-danger">{{allArticles}}</span>
           </i>
           All Articles
         </a>
       </li>
 </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search Article" aria-label="Search">
+    <form action = '/search/' class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" name = "keywords" type="text" placeholder="Search Article" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>

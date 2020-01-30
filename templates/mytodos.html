@@ -16,6 +16,7 @@
         <hr style="background-color: red;">
 
 
+   {% if todos %}
 
         {% for todo in todos  %}
         <div class="row">
@@ -69,6 +70,12 @@
 
 
         {% endfor %}
+{% else %}
+  <div class="alert alert-warning">
+    There is no any Todo yet !
+</div>
+{% endif %}
+
     </div>
 </div>
 

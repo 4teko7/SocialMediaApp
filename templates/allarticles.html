@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block body %}
+
+<h1 style = 'text-align:center; margin-top:1rem;'>All Articles</h1>
+<hr>
 <div class="container" style="margin-top:1rem;">
     <div class="col-md-12 col-xs-12 col-lg-12 ">
         
@@ -16,6 +19,7 @@
     </tr>
   </thead>
   <tbody>
+  {% if articles %}
   {% for article in articles%}
     <tr>
       <th scope="row">{{article.id}}</th>
@@ -26,6 +30,11 @@
       </td>
     </tr>
 {% endfor %}
+{% else %}
+  <div class="alert alert-warning">
+    There is no any Article yet !
+</div>
+{% endif %}
   </tbody>
 </table>  
                 
