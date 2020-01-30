@@ -1,0 +1,150 @@
+
+body{
+    background-color:#EEEEEE;
+}
+.todolist{
+    background-color:#FFF;
+    padding:20px 20px 10px 20px;
+    margin-top:30px;
+}
+.todolist h1{
+    margin:0;
+    padding-bottom:20px;
+    text-align:center;
+}
+.form-control{
+    border-radius:0;
+}
+li.ui-state-default{
+    background:#fff;
+    border:none;
+    border-bottom:1px solid #ddd;
+}
+
+li.ui-state-default:last-child{
+    border-bottom:none;
+}
+
+.todo-footer{
+    background-color:#F4FCE8;
+    margin:0 -20px -10px -20px;
+    padding: 10px 20px;
+}
+#done-items li{
+    padding:10px 0;
+    border-bottom:1px solid #ddd;
+    text-decoration:line-through;
+}
+#done-items li:last-child{
+    border-bottom:none;
+}
+#checkAll{
+    margin-top:10px;
+}
+
+hr{
+    background-color: black;
+    height: 3px;
+    border-radius:50%;
+}
+
+div{
+    word-wrap: break-word;
+}
+
+
+
+@media only screen and (max-width: 480px) {
+    .reglog {
+        color:slateblue;
+        border-style:dotted;   
+        background-color:seashell;
+        border-radius: 10%;
+        
+    }
+    .logged{
+        color:honeydew;  
+        border-radius: 10%;
+    }
+
+
+    .nav{
+        margin-top:1rem;
+        background-color: olive;
+        height: 100%;
+        border-radius: 1rem;
+        opacity: 0.5;
+        width:100%;
+        border: 1px solid;
+        box-shadow: 5px 10px;
+        
+        padding-bottom: 0.5rem;
+    }
+}
+
+
+@media only screen and (min-width: 480px) {
+
+    .reglog {
+        color:slateblue;
+        border-style:dotted;   
+        background-color:seashell;
+        border-radius: 10%;
+        
+        
+    }
+    .logged{
+        color:honeydew;  
+        border-radius: 10%;
+        
+    }
+
+    .nav{
+        margin-top:1rem;
+        background-color: olive;
+        border: 1px solid;
+        box-shadow: 5px 10px;
+        
+        height: 100%;
+        border-radius: 1rem;
+        opacity: 0.5;
+        width:100%;
+        padding-bottom: 0.5rem;
+        padding-right:1rem;
+        padding-left:1rem;
+    }
+
+    .reg{
+        margin-right:2rem;
+    }
+    .log{
+        margin-left:2rem;
+    }
+}
+
+
+.reglog:hover {
+    color:tomato;
+    cursor:pointer;
+}
+.logout:hover{
+    cursor:pointer;
+    color:red;
+}
+
+.logout{
+    height:4rem;;
+    width:10rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.dil{
+    width:7rem;
+    height:3rem;
+    font-size:1rem;
+    font-weight: bolder;
+    color:red;
+    margin-right: 0.5rem;
+    margin-top : 0.5rem;
+}
