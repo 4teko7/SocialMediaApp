@@ -6,10 +6,9 @@ from .models import Todo
 # Register your models here.
 @admin.register(Todo)
 class TodoAdmin(admin.ModelAdmin):
-    list_display = ["title","author","createdDate"]
-    list_display_links = ["title","createdDate"]
-    search_fields = ["title"]
-    list_filter = ["createdDate"]
+    list_display = ["id","author","iscompleted","date","content"]
+    list_display_links = ["content"]
+    list_filter = ["iscompleted","id","date"]
     
     class Meta:
         model = Todo

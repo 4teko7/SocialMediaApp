@@ -4,5 +4,9 @@ from todo.todoViews import *
 app_name = "todoRoutes"
 urlpatterns = [
     url("addtodo/",addTodo,name = "addtodo"),
+    url("mytodos/",myTodos,name = "mytodos"),
+    url("completetodo/",completeTodo,name = "completetodo"),
+
+
 
 ]

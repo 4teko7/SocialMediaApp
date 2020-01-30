@@ -8,10 +8,10 @@ from .models import Article
 # admin.site.register(Article)
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ["title","author","createdDate"]
+    list_display = ["id","title","author","createdDate"]
     list_display_links = ["title","createdDate"]
-    search_fields = ["title"]
-    list_filter = ["createdDate"]
+    search_fields = ["id","title"]
+    list_filter = ["id","createdDate"]
     
     class Meta:
         model = Article

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div class="container">
+
+<h1>Edit Article</h1>
+<hr>
+<form action="/articles/editarticle/{{id}}/" method = "POST">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type = "submit" class ="btn btn-danger">Save</button>
+</form>
+
+</div>
+{% endblock body %}

@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container" style="margin-top:1rem;">
+    <div class="col-md-12 col-xs-12 col-lg-12 ">
+        
+              
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col" style = "word-wrap: break-word;">Title</th>
+      <th scope="col">Created Date</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for article in articles%}
+    <tr>
+      <th scope="row">{{article.id}}</th>
+      <td><a href = "/articles/articledetail/{{article.id}}/">{{article.title}}</a></td>
+      <td>{{article.createdDate}}</td>
+      <td>
+        <a href = "/articles/articledetail/{{article.id}}/"><button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button></a>
+      </td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>  
+                
+               
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock body %}
+
+
+
+
