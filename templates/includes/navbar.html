@@ -5,7 +5,10 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">TEKO</a>
+  <form action = "/language/" method = "GET">
+    <input name = "currentPage" type="hidden" value = "{{ request.path }}">
+    <button  type = "submit" class="btn btn-info" style = "margin-right:0.5rem;">{{lang.language}}</button>
+  </form>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -15,7 +18,7 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">
           <i class="fa fa-home"></i>
-          Main Page
+          {{lang.mainPage}}
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -25,7 +28,7 @@
           <i class="fa fa-bell">
             <span class="badge badge-danger">{{myTodos}}</span>
           </i>
-          My Todos
+          {{lang.myTodos}}
         </a>
       </li>
 <li class="nav-item">
@@ -33,14 +36,14 @@
           <i class="fa fas fa-envelope">
             <span class="badge badge-warning">{{myArticles}}</span>
           </i>
-          My Articles
+          {{lang.myArticles}}
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/users/about/">
           <i style= "" class="fa fas fa-user">
           </i>
-          About
+          {{lang.about}}
         </a>
       </li>
       
@@ -48,7 +51,7 @@
         <a class="nav-link" href="/users/logout/">
           <i class="fa fas fa-power-off">
           </i>
-          Logout
+          {{lang.logout}}
         </a>
       </li>
       
@@ -69,11 +72,11 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-envelope-o">
           </i>
-          Login-Register
+          {{lang.loginregister}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/users/register/">Register</a>
-          <a class="dropdown-item" href="/users/login/">Login</a>
+          <a class="dropdown-item" href="/users/register/">{{lang.register}}</a>
+          <a class="dropdown-item" href="/users/login/">{{lang.login}}</a>
           <!-- <div class="dropdown-divider"></div> -->
           <!-- <a class="dropdown-item" href="#">Something else here</a> -->
         </div>
@@ -88,14 +91,14 @@
         <a class="nav-link" href="/articles/addarticle/">
           <i class="fa fas fa-plus">
           </i>
-          Add Article
+          {{lang.addArticle}}
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/todos/addtodo/">
           <i class="fa fas fa-calendar-check">
           </i>
-          Add Todo
+          {{lang.addTodo}}
         </a>
       </li>
   {% endif %}
@@ -104,13 +107,20 @@
           <i class="fa fa-globe">
             <span class="badge badge-danger">{{allArticles}}</span>
           </i>
-          All Articles
+          {{lang.allArticles}}
         </a>
       </li>
 </ul>
     <form action = '/search/' class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" name = "keywords" type="text" placeholder="Search Article" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" name = "keywords" type="text" placeholder="{{lang.searchArticle}}" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{lang.search}}</button>
     </form>
   </div>
 </nav>
+
+
+<script>
+
+
+
+</script>

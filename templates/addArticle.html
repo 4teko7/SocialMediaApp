@@ -7,12 +7,12 @@
     <div class="row">
 
         <div class="col align-self-center">
-        <h1>Add Article</h1>
+        <h1>{{lang.addArticle}}</h1>
             <hr>
             <form action="/articles/addarticle/" method="POST">
                 {% csrf_token %}
                 {{form|crispy}}
-                <button type="submit" class="btn btn-danger">Add Article</button>
+                <button type="submit" class="btn btn-danger">{{lang.addArticle}}</button>
             </form>
         </div>
 

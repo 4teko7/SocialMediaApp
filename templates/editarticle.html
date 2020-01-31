@@ -4,15 +4,15 @@
 {% block body %}
 <div class="container">
 
-<h1>Edit Article</h1>
+<h1>{{lang.editArticle}}</h1>
 <hr>
 <form action="/articles/editarticle/{{id}}/" method = "POST">
     {% csrf_token %}
     {{form|crispy}}
-    <button type = "submit" class ="btn btn-danger">Save</button>
+    <button type = "submit" class ="btn btn-danger">{{lang.save}}</button>
 </form>
 <div style="text-align: center; margin-top: 1rem; margin-bottom:2rem;" class = "pull-right">
-        <button type = "button" onclick="history.back()" class="btn btn-primary">Go Back</button>
+        <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
         
     </div>
 </div>

@@ -7,4 +7,9 @@ urlpatterns = [
     url("register/",registerUser,name = "registerUser"),
     url("login/",loginUser,name = "loginUser"),
     url("logout/",logoutUser,name = "logoutUser"),
+    url("editprofile/",editProfile,name = "editprofile"),
+    url("saveprofile/",saveProfile,name = "saveprofile"),
+    url("changepassword/",changePassword,name = "changepassword"),
+    url("changeusername/",changeUsername,name = "changeusername"),
+
 ]

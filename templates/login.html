@@ -6,12 +6,12 @@
     <div class="row">
 
         <div class="col align-self-center">
-        <h1>Login</h1>
+        <h1>{{lang.login}}</h1>
             <hr>
             <form action="/users/login/" method="POST">
                 {% csrf_token %}
                 {{form|crispy}}
-                <button type="submit" class="btn btn-danger">Login</button>
+                <button type="submit" class="btn btn-danger">{{lang.login}}</button>
             </form>
         </div>
 

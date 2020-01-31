@@ -3,7 +3,7 @@
 
 {% block body %}
 
-<h1 style = 'text-align:center; margin-top:1rem;'>All Articles</h1>
+<h1 style = 'text-align:center; margin-top:1rem;'>{{lang.allArticles}}</h1>
 <hr>
 <div class="container" style="margin-top:1rem;">
     <div class="col-md-12 col-xs-12 col-lg-12 ">
@@ -12,9 +12,9 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th scope="col">Id</th>
-      <th scope="col" style = "word-wrap: break-word;">Title</th>
-      <th scope="col">Created Date</th>
+      <th scope="col">{{lang.id}}</th>
+      <th scope="col" style = "word-wrap: break-word;">{{lang.title}}</th>
+      <th scope="col">{{lang.createdDate}}</th>
 
     </tr>
   </thead>
@@ -32,7 +32,7 @@
 {% endfor %}
 {% else %}
   <div class="alert alert-warning">
-    There is no any Article yet !
+    {{lang.noArticle}}
 </div>
 {% endif %}
   </tbody>

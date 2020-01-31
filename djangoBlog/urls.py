@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """djangoBlog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -19,15 +21,24 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import admin
 from article.models import Article
 from todo.models import Todo
+from todo.todoViews import todoLanguage
+from article.articleViews import articleLanguage
+from users.userViews import userLanguage
+from comment.commentViews import commentLanguage
+
+from .language import *
 
 
 context = {}
 allArticles = 0
 myTodos = 0
 myArticles = 0
-
+lang = en
 def mainPage(req): 
     check(req)
+    global lang
+    global context
+    context['lang'] = lang
     return render(req,"index.html",context)
     
 
@@ -37,7 +48,9 @@ def search(req):
     if(keywords):
         articles = Article.objects.filter(title__contains = keywords)
         global context
+        global lang
         context['articles'] = articles
+        context['lang'] = lang
         return render(req,'allarticles.html',context)
 
 def check(req):
@@ -50,7 +63,9 @@ def check(req):
             "myArticles":myArticles
              }
     else:
-        context = {}
+        global allArticles
+        allArticles = len(Article.objects.all())
+        context = {"allArticles":allArticles}
 
 
 def allInfo(req):
@@ -61,6 +76,19 @@ def allInfo(req):
     myTodos = len(Todo.objects.filter(author = req.user))
     myArticles = len(Article.objects.filter(author = req.user))
 
+def language(req):
+    global lang
+    global context
+    if(lang['language'] == "ENGLISH"): lang = en
+    else: lang = tr
+    context['lang'] = lang
+
+    todoLanguage(lang)
+    articleLanguage(lang)
+    userLanguage(lang)
+    commentLanguage(lang)
+    print()
+    return redirect(req.GET.get("currentPage"))
 
 
 urlpatterns = [
@@ -70,5 +98,6 @@ urlpatterns = [
     url("todos/",include("todo.todoRoutes")),
     url('search/',search,name = 'search'),
     url('comments/',include('comment.commentRoutes')),
+    url('language/',language,name = "language"),
     url("",mainPage,name="mainPage")
 ]

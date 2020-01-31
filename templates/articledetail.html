@@ -29,7 +29,7 @@
 
     </div>
     <div style="text-align: center; margin-top: 2rem; margin-bottom:2rem;" class = "pull-right">
-        <button type = "button" onclick="history.back()" class="btn btn-primary">Go Back</button>
+        <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
         
     </div>
 </div>
@@ -38,14 +38,22 @@
 <div class="container">
     <div class="row">
 
-        <div style = "text-align:center;" class="col align-self-center">
-        <h1>What Do You Think ?</h1>
+        <div style = "text-align:center; " class="col align-self-center">
+        <h1>{{lang.whatDoYouThink}}</h1>
             <hr>
+            {% if request.user.is_authenticated %}
             <form action="/comments/addcomment/{{article.id}}/" method="POST">
                 {% csrf_token %}
+                
+               
                 {{commentForm|crispy}}
-                <button type="submit" class="btn btn-danger">Save</button>
+                <button type="submit" class="btn btn-danger">{{lang.save}}</button>
             </form>
+            {% else %}
+            <textarea type="text" rows="6" id="name" name = "name" class="form-control" placeholder = "{{lang.disabledComment}}"  required disabled></textarea>
+            <br>
+            <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+            {% endif %}
         </div>
 
     </div>

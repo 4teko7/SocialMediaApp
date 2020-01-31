@@ -1,6 +1,21 @@
 from django import forms
 from django.contrib.auth.models import User
 
+class ChangeUsername(forms.Form):
+    newUsername = forms.CharField(max_length = 30,label = "New Username")
+
+
+class ChangePassword(forms.Form):
+    oldPassword = forms.CharField(label = "Old Password",widget = forms.PasswordInput)
+    newPassword = forms.CharField(label = "New Password",widget = forms.PasswordInput)
+    newPasswordConfirm = forms.CharField(label = "New Password Confirm",widget = forms.PasswordInput)
+
+    
+class ProfileForm(forms.Form):
+    firstname = forms.CharField(label = "Firstname")
+    lastname = forms.CharField(label = "Lastname")
+    email = forms.EmailField(label = "Email")
+    #widget = forms.PasswordInput
 class loginForm(forms.Form):
     username = forms.CharField(label = "Username")
     password = forms.CharField(label = "Password",widget = forms.PasswordInput)

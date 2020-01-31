@@ -7,7 +7,7 @@
     <div class="col-md-12 col-xs-12 col-lg-12 ">
         <div style="margin-top:1rem; margin-bottom:2rem;">
 
-            <h1 style="text-align: center; font-size:2.5rem;">My Todos</h1>
+            <h1 style="text-align: center; font-size:2.5rem;">{{lang.myTodos}}</h1>
             <p style="font-size: 1.5rem;font-weight: bold;  position:absolute; right : 2rem; top:2.3rem;"
                 class=" pull-right">{{date}}</p>
 
@@ -21,7 +21,7 @@
         {% for todo in todos  %}
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xs-12">
-                <strong>Date : </strong> {{todo.date}}
+                <strong>{{lang.date}} : </strong> {{todo.date}}
 
 
 
@@ -36,19 +36,19 @@
                 {% endif %}
                 <br>
                 <div style="display:inline; word-wrap: break-word;">
-                    <strong>Content : </strong>{{todo.content}}
+                    <strong>{{lang.content}} : </strong>{{todo.content}}
                 </div>
                 <form action="/todos/completetodo/" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="id" value={{todo.id}}>
                     {% if not todo.iscompleted %}
                     <button type="submit" class="btn btn-success pull-right"
-                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">Complete</button>
+                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">{{lang.complete}}</button>
                     {% else %}
 
 
                     <button type="submit" class="btn btn-warning pull-right"
-                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">Undo</button>
+                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">{{lang.undo}}</button>
 
 
                     {% endif %}
@@ -58,7 +58,7 @@
                 <form action="/todos/deletetodo/{{todo.id}}/" method="POST">
                         {% csrf_token %}
                     <button type="submit" class="btn btn-danger pull-right"
-                        style="color:white; margin-top:1rem; margin-right:0.3rem;font-size:0.7rem; font-weight:bolder; width:5rem;">Delete</button>
+                        style="color:white; margin-top:1rem; margin-right:0.3rem;font-size:0.7rem; font-weight:bolder; width:5rem;">{{lang.delete}}</button>
                 </form>
                 {% endif %}
 
@@ -72,7 +72,7 @@
         {% endfor %}
 {% else %}
   <div class="alert alert-warning">
-    There is no any Todo yet !
+    {{lang.noTodo}}
 </div>
 {% endif %}
 

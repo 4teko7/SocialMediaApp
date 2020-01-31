@@ -8,11 +8,14 @@ from .models import Article
 from todo.models import Todo
 from comment.models import Comment
 from comment.commentForms import *
+from djangoBlog.language import *
 
 context = {}
 allArticles = 0
 myTodos = 0
 myArticles = 0
+lang = en
+
 def allInfo(req):
     global allArticles
     global myTodos
@@ -20,20 +23,24 @@ def allInfo(req):
     allArticles = len(Article.objects.all())
     myTodos = len(Todo.objects.filter(author = req.user))
     myArticles = len(Article.objects.filter(author = req.user))
+
+
+def check(req):
+    global context
+    if(req.user.is_authenticated):
+        allInfo(req)
+        context = {
+            "allArticles":allArticles,
+            "myTodos":myTodos,
+            "myArticles":myArticles
+             }
+    else:
+        global allArticles
+        allArticles = len(Article.objects.all())
+        context = {"allArticles":allArticles}
 # "allArticles":allArticles,"myTodos":myTodos,"myArticles":myArticles
 
 # Create your views here.
-def index(req):
-    # return HttpResponse("<h3>Anasayfa</h3>")
-    check(req)
-    return render(req,"index.html",context)
-
-# def detail(req,id):
-#     # return HttpResponse("<h3>Anasayfa</h3>")
-#     check(req)
-#     global context
-#     context['id'] = id
-#     return render(req,"index.html",context)
 
 
 
@@ -45,14 +52,15 @@ def addArticle(req):
     check(req)
     global context
     context['form'] = form
-
+    global lang
+    context['lang'] = lang
     if(req.method == "POST"):
         form = addArticleForm(req.POST)
         if(form.is_valid()):
             article = form.save(commit = False)
             article.author = req.user
             article.save()
-            messages.success(req,"Article Successfully Added.")
+            messages.success(req,lang['articleAdded'])
             return HttpResponseRedirect("/articles/myarticles/")
         else:
 
@@ -67,6 +75,8 @@ def myArticles(req):
     articles = articles.order_by("createdDate")
     global context
     context['articles'] = articles
+    global lang
+    context['lang'] = lang
     return render(req,"myarticles.html",context)
 
 
@@ -81,6 +91,8 @@ def articleDetail(req,id):
     context['article'] = article[0]
     context['commentForm'] = commentForm
     context['comments'] = comments
+    global lang
+    context['lang'] = lang
     return render(req,"articledetail.html",context)
     # return HttpResponseRedirect('/articles/myarticles/')
 def allArticles(req):
@@ -88,7 +100,8 @@ def allArticles(req):
     check(req)
     global context
     context['articles'] = articles
-    
+    global lang
+    context['lang'] = lang
     return render(req,"allarticles.html",context)
 
 
@@ -100,7 +113,8 @@ def editArticle(req,id):
     global context
     context['form'] = form
     context['id'] = id
-
+    global lang
+    context['lang'] = lang
     if(req.method == "POST"):
  
 
@@ -112,7 +126,7 @@ def editArticle(req,id):
             article.author = req.user
             articleOld.delete()
             article.save()
-            messages.success(req,"Article Successfully Added.")
+            messages.success(req,lang['articleUpdated'])
             return HttpResponseRedirect("/articles/myarticles/")
         else:
             return render(req,"editarticle.html",context)
@@ -127,18 +141,16 @@ def deleteArticle(req,id):
     article = Article.objects.filter(id = id , author = req.user)
     if(article):
         article.delete()
+        messages.success(req,lang['articleDeleted'])
 
     return HttpResponseRedirect('/articles/myarticles/')
 
 
-def check(req):
+def articleLanguage(lang2):
+    global lang
     global context
-    if(req.user.is_authenticated):
-        allInfo(req)
-        context = {
-            "allArticles":allArticles,
-            "myTodos":myTodos,
-            "myArticles":myArticles
-             }
-    else:
-        context = {}
+    lang = lang2
+    context['lang'] = lang
+
+
+    
