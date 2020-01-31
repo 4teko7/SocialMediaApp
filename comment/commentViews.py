@@ -46,12 +46,27 @@ def addComment(req,id):
             comment = form.save(commit = False)
             comment.author = req.user
             comment.article = Article.objects.filter(id = id)[0]
+            articlee = comment.article
             comment.save()
             messages.success(req,lang['commentAdded'])
             return HttpResponseRedirect("/articles/articledetail/"+id + "/")
         else:
-
+            if(len(comment.content) > 4000):
+                messages.success(req,lang['longComment'])
             return HttpResponseRedirect("/articles/articledetail/"+id + "/")
+def addCommentComment(req,id):
+    form = CommentForm(req.POST)
+    articleId = req.POST.get("articleId")
+    if(form.is_valid()):
+        superComment = Comment.objects.get(id = id)
+        content = form.cleaned_data.get("content")
+        superComment.comments.append({"author":req.user.username,"content":content,"id":int(id)}) 
+        superComment.save()
+        messages.success(req,lang['commentAdded'])
+        return HttpResponseRedirect("/articles/articledetail/" + articleId + "/")
+    else:
+        messages.info(req,lang['Comment is not Added'])
+        return HttpResponseRedirect("/articles/articledetail/" + articleId + "/")
 
 def commentLanguage(lang2):
     global lang

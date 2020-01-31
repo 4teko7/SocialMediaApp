@@ -11,12 +11,25 @@
     {% if request.user.is_authenticated %}
 
 <div class="container" style = "text-align:center;">
+    <div class="row">
+        <div class="col-md-6 col-lg-4 col-xs-12">
         <a href = "/users/editprofile/"><scan style = "font-size:1.5rem;">{{lang.editProfile}}<br><img style = "width:6rem;height:6rem;"src={% static 'img/editProfile.png' %}></scan></a>
         <br><br>
         <a href = "/users/changepassword/"><scan style = "font-size:1.5rem;">{{lang.changePassword}}<br><img style = "width:6rem;height:6rem;"src={% static 'img/password.png' %}></scan></a>
         <br><br>
         <a href = "/users/changeusername/"><scan style = "font-size:1.5rem;">{{lang.changeUsername}}<br><img style = "width:8rem;height:8rem;"src={% static 'img/username.png' %}></scan></a>
+    </div>
+    <div class="col-md-6 col-lg-4 col-xs-12">
+        <!-- RECENT TODOS  -->
 
+        
+    </div>
+    <div class="col-md-6 col-lg-4 col-xs-12">
+        <!-- RECENT ARTICLES  -->
+
+        
+    </div>
+</div>
 </div>
 {% endif %}
 {% endblock body %}

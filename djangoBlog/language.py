@@ -47,6 +47,7 @@ tr = {
     'editArticle':"Makaleyi Düzenle",
     'disabledComment':"Yorum Yapabilmek İçin Giriş Yapmanız Gerekiyor !",
     'commentAdded':"Başarıyla Yorum Yaptınız.",
+    'longComment':"Yorum Çok Uzun",
 
 # MESSAGES
     'noTodo':"Henüz Planınız Yok",
@@ -123,7 +124,8 @@ en = {
     'loginregister':"Login-Register",
     'disabledComment':"Please Login Before Make Any Comment !",
     'commentAdded':"Comment Successfully Added.",
-
+    'by':"By",
+    'longComment':"Comment is very long",
 
 # MESSAGES
     'noTodo':"There is no any Todo yet !",

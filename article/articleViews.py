@@ -95,6 +95,8 @@ def articleDetail(req,id):
     context['lang'] = lang
     return render(req,"articledetail.html",context)
     # return HttpResponseRedirect('/articles/myarticles/')
+
+
 def allArticles(req):
     articles = Article.objects.all()
     check(req)

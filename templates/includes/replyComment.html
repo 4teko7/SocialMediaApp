@@ -1,0 +1,22 @@
+{% load crispy_forms_tags %}
+
+<div id = "replyDiv{{comment.id}}" style = "display:none; z-index: 3px;">
+                    
+    <div style = "text-align:center; " class="col align-self-center">
+        {% if request.user.is_authenticated %}
+        <form action="/comments/addcommentcomment/{{comment.id}}/"  method="POST">
+            {% csrf_token %}
+            
+           
+            {{commentForm|crispy}}
+            <input type="hidden" value = {{article.id}} name = "articleId">
+            <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+        </form>
+        {% else %}
+        <textarea type="text" rows="6" id="name" name = "name" class="form-control" placeholder = "{{lang.disabledComment}}"  required disabled></textarea>
+        <br>
+        <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+        {% endif %}
+    </div>
+
+</div>

@@ -6,9 +6,212 @@
 
 <link href='{% static 'css/todos.css' %}' rel="stylesheet" id="bootstrap-css">
 
+<style>
+
+  .media {
+    display: "flex";
+    align-items: "flex-start";
+    
+}
+hr{
+  background-color: aquamarine;
+  height: 0.6px;
+  border-radius:50%;
+}
+</style>
+
+<div id = "style1" class = "container" >
 
 
+    <div class="row">
+      
+        <!-- Post Content Column -->
+        <div class="col-lg-8 col-md-8 col-xs-12">
+          <button id = "changePageStyle" class = "btn btn-primary pull-right" style = "margin-top:2rem;" onclick = "changePageStyle()">Change Page Style</button>
+          <!-- Title -->
+          <h1 class="mt-4">{{article.title}}</h1>
+  
+          <!-- Author -->
+          <p class="lead">
+            {{lang.by}}
+            <a href="#">{{article.author}}</a>
+          </p>
+  
+          <hr>
+  
+          <!-- Date/Time -->
+          <p>Posted on {{article.createdDate}}</p>
+  
+          <hr>
+  
+          <!-- Preview Image -->
+          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+  
+          <hr>
+  
+          <!-- Post Content -->
+          <p class="lead">{{article.content}}</p>
+          <hr >
+  
+          <!-- ADD COMMENT  -->
+          <div class="container">
+            <div class="row">
+        
+                <div style = "text-align:center; " class="col align-self-center">
+                <h1>{{lang.whatDoYouThink}}</h1>
+                    <hr>
+                    {% if request.user.is_authenticated %}
+                    <form action="/comments/addcomment/{{article.id}}/" method="POST">
+                        {% csrf_token %}
+                        
+                       
+                        {{commentForm|crispy}}
+                        <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+                    </form>
+                    {% else %}
+                    <textarea type="text" rows="6" id="name" name = "name" class="form-control" placeholder = "{{lang.disabledComment}}"  required disabled></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+                    {% endif %}
+                </div>
+        
+            </div>
+        </div>
+        
+          <!-- END OF ADD COMMENT  -->
+
+          <!-- Comments Form -->
+
+
+                                        <!-- COMMENT TO COMMENT -->
+
+
+          {% for comment in comments%}
+          <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div  class="media-body" style = " word-wrap: break-word;">
+              <h5 class="mt-0">{{comment.author}}</h5>
+              <a href = "#commentForm{{comment.id}}"><button style = "font-size:0.8rem; display :inline;" name = "replyDiv{{comment.id}}" class = "btn btn-danger pull-right" onclick = "reply(this.name)">Reply</button></a>
+
+              <div id = "commentForm{{comment.id}}">
+              {{comment.content}}  
+            </div>
+
+              {% include "includes/replyComment.html" %}
+
+
+              {% for comment2 in comment.comments %}
+
+              {% if comment2.id == comment.id %}
+              
+              <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body" style = " word-wrap: break-word;">
+                  <h5 class="mt-0">{{comment2.author}}</h5>
+                  {{comment2.content}}
+                </div>
+              </div>
+              {% endif %}
+              
+              {% endfor %}
+              
+              <hr>
+
+             
+  
+            </div >
+          </div>
+          {% endfor %}
+
+
+
+
+       
+          
+          
+                                        <!-- END OF COMMENT TO COMMENT -->
+
+        
+
+
+
+  
+          
+  
+        </div>
+  
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4 col-md-4 col-xs-12">
+  
+          <!-- Search Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Categories Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Categories</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">Web Design</a>
+                    </li>
+                    <li>
+                      <a href="#">HTML</a>
+                    </li>
+                    <li>
+                      <a href="#">Freebies</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">JavaScript</a>
+                    </li>
+                    <li>
+                      <a href="#">CSS</a>
+                    </li>
+                    <li>
+                      <a href="#">Tutorials</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Side Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Side Widget</h5>
+            <div class="card-body">
+              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+      <!-- /.row -->
+    </div>
+    
+
+
+
+
+<div id = "style2" style = " display:hidden">
 <div class="container" style = "border-style:double; align-content: center; margin-top:2rem;">
+  <button id = "changePageStyle" class = "btn btn-primary pull-right" style = "margin-top:1rem;" onclick = "changePageStyle()">Change Page Style</button>
 
     <div class="container" style = "margin-top: 0.5rem; margin-bottom: 10%; align-content: center">
     <p style = "display:inline; margin-right:1rem;"><em>{{article.createdDate}}</em></p>
@@ -35,6 +238,7 @@
 </div>
 <br><br><br><br>
 <br>
+                                    <!-- ADD COMMENT -->
 <div class="container">
     <div class="row">
 
@@ -58,40 +262,94 @@
 
     </div>
 </div>
+                                    <!-- END OF ADD COMMENT -->
 
-
-{% for comment in comments %}
-<div class="container" style = "border-style:double; align-content: center; margin-top:2rem;">
-
-    <div class="container" style = "margin-top: 0.5rem; margin-bottom: 10%; align-content: center">
-    <p style = "display:inline; margin-right:1rem;"><em>{{comment.createdDate}}</em></p>
-
-        <br>
+<div class="container" style = "margin-top:2rem;">
+                      {% for comment in comments%}
+                      <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div  class="media-body" style = " word-wrap: break-word;">
+                          <h5 class="mt-0">{{comment.author}}</h5>
+                          <a href = "#commentForm2{{comment.id}}"><button style = "font-size:0.8rem; display :inline;" name = "replyDiv2{{comment.id}}" class = "btn btn-danger pull-right" onclick = "reply(this.name)">Reply</button></a>
             
-            <div style = "font-weight: bold; word-wrap: break-word; text-align:center;">{{comment.author}}</div>
-            <hr style = "height: 5px;background-color: red; margin-right:2rem">
-
-
-        
-
-                
-            <div style = "word-wrap: break-word;">{{comment.content}}</div>
+                          <div id = "commentForm2{{comment.id}}">
+                          {{comment.content}}  
+                        </div>
             
-            <hr style = "margin-right:2rem">
-                
-
-    </div>
+                          {% include "includes/replyComment2.html" %}
+            
+            
+                          {% for comment2 in comment.comments %}
+            
+                          {% if comment2.id == comment.id %}
+                          
+                          <div class="media mt-4">
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            <div class="media-body" style = " word-wrap: break-word;">
+                              <h5 class="mt-0">{{comment2.author}}</h5>
+                              {{comment2.content}}
+                            </div>
+                          </div>
+                          {% endif %}
+                          
+                          {% endfor %}
+                          
+                          <hr style = "background-color:red">
+            
+                          
+              
+                        </div >
+                      </div>
+                      {% endfor %}
+                    </div>
+<br>
 
 </div>
 
 
+<script src = "{% static 'js/jquery.js' %}"></script>
 
-{% endfor %}
-<br>
+<script>
+
+    
+
+
+
+        function reply(id){
+        replyDiv = document.getElementById(id);
+        if (replyDiv.style.display !== 'none') {
+            replyDiv.style.display = 'none';
+        }
+        else {
+            replyDiv.style.display = 'block';
+        }
+    };
+
+    function changePageStyle(){
+      pageStyle = document.getElementById("style1")
+      pageStyle2 = document.getElementById("style2")
+      if(pageStyle.style.display == "none"){
+        pageStyle.style.display = "";
+        pageStyle2.style.display = "none";
+    }else{
+      pageStyle.style.display = "none";
+        pageStyle2.style.display = "";
+    }
+      
+
+
+    }
+
+
+
+</script>
+
 
 
 
 {% endblock body %}
+
+
 
 
 

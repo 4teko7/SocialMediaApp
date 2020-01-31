@@ -7,8 +7,8 @@ from .models import Comment
 
 # admin.site.register(Article)
 @admin.register(Comment)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ["id","author","article","createdDate"]
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ["id","author","article","createdDate","comments"]
     list_display_links = ["id","author","article"]
     search_fields = ["id","author","article"]
     list_filter = ["id","createdDate","author","article"]
