@@ -6,7 +6,6 @@ from .todoForms import *
 from django.contrib import messages
 from .models import Todo
 from article.models import Article
-from djangoBlog.language import *
 
 # Create your views here.
 
@@ -14,7 +13,6 @@ context = {}
 allArticles = 0
 myTodos = 0
 myArticles = 0
-lang = en
 
 
 def allInfo(req):
@@ -27,28 +25,29 @@ def allInfo(req):
 # "allArticles":allArticles,"myTodos":myTodos,"myArticles":myArticles
 
 def check(req):
+    from .todoLang import lang2
     global context
     if(req.user.is_authenticated):
         allInfo(req)
         context = {
             "allArticles":allArticles,
             "myTodos":myTodos,
-            "myArticles":myArticles
+            "myArticles":myArticles,
+            "lang":lang2
              }
     else:
         global allArticles
         allArticles = len(Article.objects.all())
-        context = {"allArticles":allArticles}
+        context = {"allArticles":allArticles,"lang":lang2}
 
 
 def addTodo(req):
+    from .todoLang import lang2
     form = addTodoForm()
     check(req)
     global context
     context['form'] = form
     allInfo(req)
-    global lang
-    context['lang'] = lang
     if(req.method == "POST"):
         print("POSTA GIRDI")
         form = addTodoForm(req.POST)
@@ -57,7 +56,7 @@ def addTodo(req):
             date = form.cleaned_data.get("date")
             newTodo = Todo(content = content , date = date,author = req.user)
             newTodo.save()
-            messages.success(req,lang['todoAdded'])
+            messages.success(req,lang2['todoAdded'])
             return HttpResponseRedirect('/todos/mytodos/')
         else:
             return render(req,"addtodo.html",context)
@@ -72,31 +71,26 @@ def myTodos(req):
     global context
     context['todos'] = todos
     context['date'] = datetime.datetime.now()
-    global lang
-    context['lang'] = lang
     return render(req,"mytodos.html",context)
 
 def completeTodo(req):
+    from .todoLang import lang2
+
     id = req.POST.get('id')
     todo = Todo.objects.filter(id = id,author = req.user)
     if(todo):
         if(todo[0].iscompleted): todo[0].iscompleted = False
         else: todo[0].iscompleted = True
         todo[0].save()
-        messages.success(req,lang['todoCompleted'])
+        messages.success(req,lang2['todoCompleted'])
     return HttpResponseRedirect('/todos/mytodos/')
 
 
 def deleteTodo(req,id):
+    from .todoLang import lang2
+
     todo = Todo.objects.filter(id = id,author = req.user)
     todo.delete()
-    messages.success(req,lang['todoDeleted'])
+    messages.success(req,lang2['todoDeleted'])
     return HttpResponseRedirect('/todos/mytodos/')
 
-
-
-def todoLanguage(lang2):
-    global lang
-    global context
-    lang = lang2
-    context['lang'] = lang

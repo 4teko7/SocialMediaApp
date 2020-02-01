@@ -8,7 +8,7 @@ tr = {
     "about":"Hakkımda",
     "logout":"Çıkış",
     "login":"Giriş Yap",
-    "register":"Çıkış Yap",
+    "register":"Kayıt Ol",
     "confirm":"Şifre Doğrula",
     "password":"Şifre",
     "addArticle":"Makale Ekle",
@@ -48,6 +48,8 @@ tr = {
     'disabledComment':"Yorum Yapabilmek İçin Giriş Yapmanız Gerekiyor !",
     'commentAdded':"Başarıyla Yorum Yaptınız.",
     'longComment':"Yorum Çok Uzun",
+    'author':"Yazar",
+    'addComment':"Yorum Ekle",
 
 # MESSAGES
     'noTodo':"Henüz Planınız Yok",
@@ -126,6 +128,9 @@ en = {
     'commentAdded':"Comment Successfully Added.",
     'by':"By",
     'longComment':"Comment is very long",
+    'author':"Author",
+    'addComment':"Add Comment",
+
 
 # MESSAGES
     'noTodo':"There is no any Todo yet !",

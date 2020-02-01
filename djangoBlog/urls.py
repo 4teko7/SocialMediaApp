@@ -21,10 +21,10 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import admin
 from article.models import Article
 from todo.models import Todo
-from todo.todoViews import todoLanguage
-from article.articleViews import articleLanguage
-from users.userViews import userLanguage
-from comment.commentViews import commentLanguage
+from todo.todoLang import todoLanguage
+from article.articleLang import articleLanguage
+from users.userLang import userLanguage
+from comment.commentLang import commentLanguage
 
 from .language import *
 
@@ -87,7 +87,6 @@ def language(req):
     articleLanguage(lang)
     userLanguage(lang)
     commentLanguage(lang)
-    print()
     return redirect(req.GET.get("currentPage"))
 
 

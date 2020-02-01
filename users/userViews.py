@@ -8,7 +8,6 @@ from django.contrib import messages
 from .userForms import *
 from todo.models import Todo
 from article.models import Article
-from djangoBlog.language import *
 
 # Create your views here.
 context = {}
@@ -16,7 +15,6 @@ context = {}
 allArticles = 0
 myTodos = 0
 myArticles = 0
-lang = en
 
 def allInfo(req):
     global allArticles
@@ -28,34 +26,35 @@ def allInfo(req):
 # "allArticles":allArticles,"myTodos":myTodos,"myArticles":myArticles
 
 def check(req):
+    from .userLang import lang2
+
     global context
     if(req.user.is_authenticated):
         allInfo(req)
         context = {
             "allArticles":allArticles,
             "myTodos":myTodos,
-            "myArticles":myArticles
+            "myArticles":myArticles,
+            "lang":lang2
              }
     else:
         global allArticles
         allArticles = len(Article.objects.all())
-        context = {"allArticles":allArticles}
+        context = {"allArticles":allArticles,"lang":lang2}
 
 
 def about(req):
     check(req)
     global context
-    global lang
-    context['lang'] = lang
     return render(req,"about.html",context)
 
 def registerUser(req):
+    from .userLang import lang2
+
     form = registerForm()
     check(req)
     global context
     context['form'] = form
-    global lang
-    context['lang'] = lang  
     
     if(req.method == "POST"):
         print("POSTA GIRDI")
@@ -67,24 +66,24 @@ def registerUser(req):
             newUser.set_password(password)
             newUser.save()
             login(req,newUser)
-            messages.success(req,lang['registered'])
+            messages.success(req,lang2['registered'])
             return redirect("mainPage")
         else:
             username = User.objects.filter(username = req.user.username)
             if(username):
-                messages.warning(req,lang['usernameExists'])
+                messages.warning(req,lang2['usernameExists'])
             return render(req,"register.html",context)
     else:
         return render(req,"register.html",context)
 
    
 def loginUser(req):
+    from .userLang import lang2
+
     form = loginForm()
     check(req)
     global context
     context['form'] = form
-    global lang
-    context['lang'] = lang  
     if(req.method == "POST"):
         form = loginForm(req.POST)
         if(form.is_valid()):
@@ -93,11 +92,11 @@ def loginUser(req):
             
             user = authenticate(username = username,password = password)
             if(user):
-                messages.success(req,lang['loggedIn'])
+                messages.success(req,lang2['loggedIn'])
                 login(req,user)
                 return redirect("mainPage")
             else:
-                messages.info(req,lang['invalidUser'])
+                messages.info(req,lang2['invalidUser'])
                 return render(req,"login.html",context)
         else:
             return render(req,"login.html",context)
@@ -107,25 +106,26 @@ def loginUser(req):
 
 
 def logoutUser(req):
+    from .userLang import lang2
+
     logout(req)
-    messages.success(req,lang['logoutMessage'])
+    messages.success(req,lang2['logoutMessage'])
     check(req)
     global context
-    global lang
-    context['lang'] = lang
     return render(req,"index.html",context)
 
 def editProfile(req):
+
     user = User.objects.filter(username = req.user.username)
     form = ProfileForm(initial={'firstname': user[0].first_name,'lastname':user[0].last_name,'email':user[0].email})
     check(req)
     global context
     context['form'] = form
-    global lang
-    context['lang'] = lang
     return render(req,'editprofile.html',context)
 
 def saveProfile(req):
+    from .userLang import lang2
+
     user = User.objects.get(username = req.user.username)
     form = ProfileForm(req.POST)
     if(form.is_valid()):
@@ -133,19 +133,19 @@ def saveProfile(req):
         user.last_name = form.cleaned_data.get("lastname")
         user.email = form.cleaned_data.get("email")
         user.save()
-        messages.success(req,lang['profileUpdated'])
+        messages.success(req,lang2['profileUpdated'])
         return HttpResponseRedirect("/users/about/")
     else:
         return HttpResponseRedirect('/users/editprofile/')
 
 
 def changePassword(req):
+    from .userLang import lang2
+
     form = ChangePassword()
     check(req)
     global context
     context['form'] = form
-    global lang
-    context['lang'] = lang 
     if(req.method == "POST"):
         form = ChangePassword(req.POST)
         if(form.is_valid()):
@@ -155,34 +155,34 @@ def changePassword(req):
             user = User.objects.get(username = req.user.username)
             print(user.check_password(oldPassword))
             if(not user.check_password(oldPassword)):
-                messages.warning(req,lang['oldPasswordIncorrect'])
+                messages.warning(req,lang2['oldPasswordIncorrect'])
                 return HttpResponseRedirect('/users/changepassword/')
             elif(not (oldPassword or newPassword or newPasswordConfirm)):
-                messages.warning(req,lang['fillFields'])
+                messages.warning(req,lang2['fillFields'])
                 return HttpResponseRedirect('/users/changepassword/')
             elif(newPassword != newPasswordConfirm):
-                messages.warning(req,lang['newsdiff'])
+                messages.warning(req,lang2['newsdiff'])
                 return HttpResponseRedirect('/users/changepassword/')
             else:
                 user.set_password(newPassword)
                 user.save()
                 login(req,user)
-                messages.warning(req,lang['passwordChanged'])
+                messages.warning(req,lang2['passwordChanged'])
                 return HttpResponseRedirect('/')
         else:
-            messages.warning(req,lang['formInvalid'])
+            messages.warning(req,lang2['formInvalid'])
             return HttpResponseRedirect('/users/changepassword/')
     else:
         return render(req,"changepassword.html",context)
 
 
 def changeUsername(req):
+    from .userLang import lang2
+
     form = ChangeUsername()
     check(req)
     global context
     context['form'] = form
-    global lang
-    context['lang'] = lang  
     if(req.method == "POST"):
         form = ChangeUsername(req.POST)
         if(form.is_valid()):
@@ -190,7 +190,7 @@ def changeUsername(req):
             user = User.objects.filter(username = newUsername)
 
             if(user):
-                messages.warning(req,lang['usernameExists'])
+                messages.warning(req,lang2['usernameExists'])
                 form = ChangeUsername(initial = {'username':newUsername})
                 context['form'] = form
                 return render(req,'changeusername.html',context)
@@ -198,17 +198,10 @@ def changeUsername(req):
             else:
                 req.user.username = newUsername
                 req.user.save()
-                messages.warning(req,lang['usernameChanged'])
+                messages.warning(req,lang2['usernameChanged'])
                 return HttpResponseRedirect('/')
         else:
-            messages.warning(req,lang['formInvalid'])
+            messages.warning(req,lang2['formInvalid'])
             return HttpResponseRedirect('/users/changeusername/')
     else:
         return render(req,"changeusername.html",context)
-
-
-def userLanguage(lang2):
-    global lang
-    global context
-    lang = lang2
-    context['lang'] = lang

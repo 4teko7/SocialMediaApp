@@ -6,7 +6,6 @@ from django.contrib import messages
 
 from comment.commentForms import *
 from article.models import *
-from djangoBlog.language import *
 
 # Create your views here.
 
@@ -15,7 +14,6 @@ context = {}
 allArticles = 0
 myTodos = 0
 myArticles = 0
-lang = en
 
 def allInfo(req):
     global allArticles
@@ -25,20 +23,21 @@ def allInfo(req):
     myTodos = len(Todo.objects.filter(author = req.user))
     myArticles = len(Article.objects.filter(author = req.user))
 def check(req):
+    from .commentLang import lang2
     global context
-    global lang
     if(req.user.is_authenticated):
         allInfo(req)
         context = {
             "allArticles":allArticles,
             "myTodos":myTodos,
             "myArticles":myArticles,
-            'lang':lang
+            'lang':lang2
              }
     else:
-        context = {"allArticles":allArticles}
+        context = {"allArticles":allArticles,"lang":lang2}
 
 def addComment(req,id):
+    from .commentLang import lang2
     form = CommentForm()
     if(req.method == "POST"):
         form = CommentForm(req.POST)
@@ -48,13 +47,14 @@ def addComment(req,id):
             comment.article = Article.objects.filter(id = id)[0]
             articlee = comment.article
             comment.save()
-            messages.success(req,lang['commentAdded'])
+            messages.success(req,lang2['commentAdded'])
             return HttpResponseRedirect("/articles/articledetail/"+id + "/")
         else:
             if(len(comment.content) > 4000):
                 messages.success(req,lang['longComment'])
             return HttpResponseRedirect("/articles/articledetail/"+id + "/")
 def addCommentComment(req,id):
+    from .commentLang import lang2
     form = CommentForm(req.POST)
     articleId = req.POST.get("articleId")
     if(form.is_valid()):
@@ -62,14 +62,9 @@ def addCommentComment(req,id):
         content = form.cleaned_data.get("content")
         superComment.comments.append({"author":req.user.username,"content":content,"id":int(id)}) 
         superComment.save()
-        messages.success(req,lang['commentAdded'])
+        messages.success(req,lang2['commentAdded'])
         return HttpResponseRedirect("/articles/articledetail/" + articleId + "/")
     else:
-        messages.info(req,lang['Comment is not Added'])
+        messages.info(req,lang2['Comment is not Added'])
         return HttpResponseRedirect("/articles/articledetail/" + articleId + "/")
 
-def commentLanguage(lang2):
-    global lang
-    global context
-    lang = lang2
-    context['lang'] = lang

@@ -21,6 +21,7 @@
   <tbody>
   {% if articles %}
   {% for article in articles%}
+  {% if not article.isPrivate %}
     <tr>
       <th scope="row">{{article.id}}</th>
       <td><a href = "/articles/articledetail/{{article.id}}/">{{article.title}}</a></td>
@@ -29,6 +30,8 @@
         <a href = "/articles/articledetail/{{article.id}}/"><button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button></a>
       </td>
     </tr>
+    {% endif %}
+
 {% endfor %}
 {% else %}
   <div class="alert alert-warning">

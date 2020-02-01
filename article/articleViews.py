@@ -8,36 +8,40 @@ from .models import Article
 from todo.models import Todo
 from comment.models import Comment
 from comment.commentForms import *
-from djangoBlog.language import *
 
-context = {}
+contex = {}
+
+
 allArticles = 0
 myTodos = 0
 myArticles = 0
-lang = en
 
 def allInfo(req):
     global allArticles
     global myTodos
     global myArticles
-    allArticles = len(Article.objects.all())
+    allArticles = len(Article.objects.filter(isPrivate = False))
     myTodos = len(Todo.objects.filter(author = req.user))
     myArticles = len(Article.objects.filter(author = req.user))
 
 
 def check(req):
+    from .articleLang import lang2
     global context
     if(req.user.is_authenticated):
         allInfo(req)
         context = {
             "allArticles":allArticles,
             "myTodos":myTodos,
-            "myArticles":myArticles
+            "myArticles":myArticles,
+            "lang":lang2
              }
     else:
         global allArticles
         allArticles = len(Article.objects.all())
-        context = {"allArticles":allArticles}
+        context = {"allArticles":allArticles,
+                    "lang":lang2
+            }
 # "allArticles":allArticles,"myTodos":myTodos,"myArticles":myArticles
 
 # Create your views here.
@@ -48,19 +52,18 @@ def check(req):
 
 
 def addArticle(req):
+    from .articleLang import lang2
     form = addArticleForm()
     check(req)
     global context
     context['form'] = form
-    global lang
-    context['lang'] = lang
     if(req.method == "POST"):
         form = addArticleForm(req.POST)
         if(form.is_valid()):
             article = form.save(commit = False)
             article.author = req.user
             article.save()
-            messages.success(req,lang['articleAdded'])
+            messages.success(req,lang2['articleAdded'])
             return HttpResponseRedirect("/articles/myarticles/")
         else:
 
@@ -75,8 +78,6 @@ def myArticles(req):
     articles = articles.order_by("createdDate")
     global context
     context['articles'] = articles
-    global lang
-    context['lang'] = lang
     return render(req,"myarticles.html",context)
 
 
@@ -91,8 +92,6 @@ def articleDetail(req,id):
     context['article'] = article[0]
     context['commentForm'] = commentForm
     context['comments'] = comments
-    global lang
-    context['lang'] = lang
     return render(req,"articledetail.html",context)
     # return HttpResponseRedirect('/articles/myarticles/')
 
@@ -102,21 +101,19 @@ def allArticles(req):
     check(req)
     global context
     context['articles'] = articles
-    global lang
-    context['lang'] = lang
     return render(req,"allarticles.html",context)
 
 
 def editArticle(req,id):
+    from .articleLang import lang2
+
     check(req)
 
     articleOld = Article.objects.filter(id=id,author = req.user)
-    form = addArticleForm(initial={'title': articleOld[0].title,'content':articleOld[0].content})
+    form = addArticleForm(initial={'title': articleOld[0].title,'content':articleOld[0].content,'isPrivate':articleOld[0].isPrivate})
     global context
     context['form'] = form
     context['id'] = id
-    global lang
-    context['lang'] = lang
     if(req.method == "POST"):
  
 
@@ -128,7 +125,7 @@ def editArticle(req,id):
             article.author = req.user
             articleOld.delete()
             article.save()
-            messages.success(req,lang['articleUpdated'])
+            messages.success(req,lang2['articleUpdated'])
             return HttpResponseRedirect("/articles/myarticles/")
         else:
             return render(req,"editarticle.html",context)
@@ -140,19 +137,14 @@ def editArticle(req,id):
             return HttpResponseRedirect("/articles/myarticles/")
 
 def deleteArticle(req,id):
+    from .articleLang import lang2
     article = Article.objects.filter(id = id , author = req.user)
     if(article):
         article.delete()
-        messages.success(req,lang['articleDeleted'])
+        messages.success(req,lang2['articleDeleted'])
 
     return HttpResponseRedirect('/articles/myarticles/')
 
-
-def articleLanguage(lang2):
-    global lang
-    global context
-    lang = lang2
-    context['lang'] = lang
 
 
     
