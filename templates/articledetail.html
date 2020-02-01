@@ -29,12 +29,19 @@ hr{
         <div class="col-lg-8 col-md-8 col-xs-12">
           <button id = "changePageStyle" class = "btn btn-primary pull-right" style = "margin-top:2rem;" onclick = "changePageStyle()">Change Page Style</button>
           <!-- Title -->
+          <div style="text-align: center; margin-top: 2rem; margin-bottom:2rem; margin-right:1rem;" class = "pull-right">
+            <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
+            
+        </div>
           <h1 class="mt-4">{{article.title}}</h1>
   
           <!-- Author -->
+          
           <p class="lead">
             {{lang.by}}
+            
             <a href="#">{{article.author}}</a>
+            
           </p>
   
           <hr>
@@ -205,11 +212,11 @@ hr{
       <!-- /.row -->
     </div>
     
+    <br><br>
 
 
 
-
-<div id = "style2" style = " display:hidden">
+<div id = "style2" style = " display:none">
 <div class="container" style = "border-style:double; align-content: center; margin-top:2rem;">
   <button id = "changePageStyle" class = "btn btn-primary pull-right" style = "margin-top:1rem;" onclick = "changePageStyle()">Change Page Style</button>
 
@@ -302,7 +309,7 @@ hr{
                       </div>
                       {% endfor %}
                     </div>
-<br>
+<br><br>
 
 </div>
 
