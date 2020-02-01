@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render,HttpResponse,redirect,HttpResponseRedirect,render_to_response
+from django.shortcuts import render,HttpResponse,redirect,HttpResponseRedirect,render_to_response,get_object_or_404
 from django.contrib import messages
 from .articleForms import *
 from .models import Article
@@ -85,6 +85,8 @@ def articleDetail(req,id):
     commentForm = CommentForm()
     check(req)
     article = Article.objects.filter(id = id)
+    if(not article):
+        return render(req,"pagenotfound.html",context)
     comments = Comment.objects.filter(article = article)
     commets = comments.order_by('createdDate')
     comments = comments[::-1]
@@ -92,7 +94,14 @@ def articleDetail(req,id):
     context['article'] = article[0]
     context['commentForm'] = commentForm
     context['comments'] = comments
-    return render(req,"articledetail.html",context)
+    if(article[0].isPrivate):
+        if(article[0].author == req.user):
+            return render(req,"articledetail.html",context)
+        else:
+            return render(req,"articleprivate.html",context)
+    else:
+        return render(req,"articledetail.html",context)
+
     # return HttpResponseRedirect('/articles/myarticles/')
 
 
@@ -110,6 +119,9 @@ def editArticle(req,id):
     check(req)
 
     articleOld = Article.objects.filter(id=id,author = req.user)
+    if(not articleOld):
+        return render(req,"warnings/canteditarticle.html",context)
+
     form = addArticleForm(initial={'title': articleOld[0].title,'content':articleOld[0].content,'isPrivate':articleOld[0].isPrivate})
     global context
     context['form'] = form
@@ -132,18 +144,24 @@ def editArticle(req,id):
     else:
 
         if(articleOld):
-            return render(req,"editarticle.html",context)
-        else:
-            return HttpResponseRedirect("/articles/myarticles/")
+            if(articleOld[0].isPrivate):
+                if(articleOld[0].author == req.user):
+                    return render(req,"editarticle.html",context)
+                else:
+                    return render(req,"warnings/articleprivate.html",context)
+            else:
+                return render(req,"editarticle.html",context)
+
 
 def deleteArticle(req,id):
     from .articleLang import lang2
     article = Article.objects.filter(id = id , author = req.user)
-    if(article):
+    if(not article):
+        return render(req,"warnings/pagenotfound.html",context)
+    else:
         article.delete()
         messages.success(req,lang2['articleDeleted'])
-
-    return HttpResponseRedirect('/articles/myarticles/')
+        return HttpResponseRedirect('/articles/myarticles/')
 
 
 

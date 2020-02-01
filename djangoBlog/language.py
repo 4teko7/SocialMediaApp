@@ -50,7 +50,8 @@ tr = {
     'longComment':"Yorum Çok Uzun",
     'author':"Yazar",
     'addComment':"Yorum Ekle",
-
+    'pageNotFound':"Sayfa Bulunamadı !",
+    'private':"Bu Makale Gizlidir.",
 # MESSAGES
     'noTodo':"Henüz Planınız Yok",
     'todoAdded':"Planınız Başarıyla Eklendi",
@@ -72,7 +73,8 @@ tr = {
     'newsdiff':'Yeni Şifre ve Doğrulama Uyuşmuyor !',
     'passwordChanged':"Şifre Başarıyla Değişti.",
     'formInvalid':"Form Hatalı !",
-    'fullname':'Isminizi Giriniz.'
+    'fullname':'Isminizi Giriniz.',
+    'cantedit':'Sizin Olmayan Makaleyi Düzenleyemezsiniz !',
 
 
 }
@@ -130,6 +132,11 @@ en = {
     'longComment':"Comment is very long",
     'author':"Author",
     'addComment':"Add Comment",
+    'pageNotFound':"Page Not Found !",
+    'private':"This Article is Private",
+    'cantedit':'You Cant Edit This Article',
+
+
 
 
 # MESSAGES
