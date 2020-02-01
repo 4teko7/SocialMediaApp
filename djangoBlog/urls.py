@@ -99,4 +99,6 @@ urlpatterns = [
     url('search/',search,name = 'search'),
     url('comments/',include('comment.commentRoutes')),
     url('language/',language,name = "language"),
+    url('^$',mainPage,name = "mainPage"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

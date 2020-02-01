@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from comment.commentForms import *
 from article.models import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -36,6 +37,7 @@ def check(req):
     else:
         context = {"allArticles":allArticles,"lang":lang2}
 
+@login_required(login_url="/users/login/")
 def addComment(req,id):
     from .commentLang import lang2
     form = CommentForm()
@@ -53,6 +55,7 @@ def addComment(req,id):
             if(len(comment.content) > 4000):
                 messages.success(req,lang['longComment'])
             return HttpResponseRedirect("/articles/articledetail/"+id + "/")
+@login_required(login_url="/users/login/")
 def addCommentComment(req,id):
     from .commentLang import lang2
     form = CommentForm(req.POST)

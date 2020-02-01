@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
-enctype="multipart/form-data"
 {% block body %}
 <style>
 #id_articleImage{
@@ -11,10 +10,10 @@ enctype="multipart/form-data"
 }
 
 </style>
-<div class="container">
+<div class="container col-md-8 col-lg-6 col-xs-8">
+    <div class="container">
     <div class="row">
 
-        <div class="col-md-8 col-lg-8 col-xs-8 align-self-center">
         <h1>{{lang.addArticle}}</h1>
             <hr>
             <form action="/articles/addarticle/" method="POST" enctype="multipart/form-data">

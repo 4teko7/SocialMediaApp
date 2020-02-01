@@ -2,18 +2,39 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
-<div class="container">
 
+<style>
+    #id_articleImage{
+    
+    
+        background-color: cornflowerblue;
+        height:3rem;
+    }
+    
+    </style>
+    <br>
+    
+    <div class="container col-md-8 col-lg-6 col-xs-8">
+        <div style=" right:1rem; position:absolute" class = "pull-right ">
+            <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
+            
+        </div>
+        <div class="container">
+        <div class="row">
 <h1>{{lang.editArticle}}</h1>
 <hr>
-<form action="/articles/editarticle/{{id}}/" method = "POST">
+<form action="/articles/editarticle/{{id}}/" method = "POST"  enctype="multipart/form-data">
     {% csrf_token %}
+    {{form.media}}
     {{form|crispy}}
     <button type = "submit" class ="btn btn-danger">{{lang.save}}</button>
 </form>
-<div style="text-align: center; margin-top: 1rem; margin-bottom:2rem;" class = "pull-right">
-        <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
-        
-    </div>
+
+
+    
 </div>
+</div>
+</div>
+
+<br><br>
 {% endblock body %}

@@ -8,7 +8,7 @@ from .models import Article
 from todo.models import Todo
 from comment.models import Comment
 from comment.commentForms import *
-
+from django.contrib.auth.decorators import login_required
 contex = {}
 
 
@@ -50,7 +50,7 @@ def check(req):
 
 # Create your views here.
 
-
+@login_required(login_url="/users/login/")
 def addArticle(req):
     from .articleLang import lang2
     form = addArticleForm()
@@ -73,7 +73,7 @@ def addArticle(req):
     else:
         return render(req,"addArticle.html",context)
 
-
+@login_required(login_url="/users/login/")
 def myArticles(req):
     check(req)
     articles = Article.objects.filter(author = req.user)
@@ -81,7 +81,6 @@ def myArticles(req):
     global context
     context['articles'] = articles
     return render(req,"myarticles.html",context)
-
 
 def articleDetail(req,id):
     commentForm = CommentForm()
@@ -109,7 +108,6 @@ def articleDetail(req,id):
 
     # return HttpResponseRedirect('/articles/myarticles/')
 
-
 def allArticles(req):
     articles = Article.objects.all()
     check(req)
@@ -117,7 +115,7 @@ def allArticles(req):
     context['articles'] = articles
     return render(req,"allarticles.html",context)
 
-
+@login_required(login_url="/users/login/")
 def editArticle(req,id):
     from .articleLang import lang2
 
@@ -127,14 +125,14 @@ def editArticle(req,id):
     if(not articleOld):
         return render(req,"warnings/canteditarticle.html",context)
 
-    form = addArticleForm(initial={'title': articleOld[0].title,'content':articleOld[0].content,'isPrivate':articleOld[0].isPrivate})
+    form = addArticleForm(initial={'title': articleOld[0].title,'content':articleOld[0].content,'isPrivate':articleOld[0].isPrivate,'articleImage':articleOld[0].articleImage})
     global context
     context['form'] = form
     context['id'] = id
     if(req.method == "POST"):
- 
+        
 
-        form = addArticleForm(req.POST)
+        form = addArticleForm(req.POST,req.FILES)
         if(form.is_valid()):
             article = form.save(commit = False)
             article.id = articleOld[0].id
@@ -157,7 +155,7 @@ def editArticle(req,id):
             else:
                 return render(req,"editarticle.html",context)
 
-
+@login_required(login_url="/users/login/")
 def deleteArticle(req,id):
     from .articleLang import lang2
     article = Article.objects.filter(id = id , author = req.user)

@@ -8,6 +8,7 @@ from django.contrib import messages
 from .userForms import *
 from todo.models import Todo
 from article.models import Article
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 context = {}
@@ -42,7 +43,7 @@ def check(req):
         allArticles = len(Article.objects.all())
         context = {"allArticles":allArticles,"lang":lang2}
 
-
+@login_required(login_url="/users/login/")
 def about(req):
     check(req)
     global context
@@ -114,6 +115,7 @@ def logoutUser(req):
     global context
     return render(req,"index.html",context)
 
+@login_required(login_url="/users/login/")
 def editProfile(req):
 
     user = User.objects.filter(username = req.user.username)
@@ -123,6 +125,7 @@ def editProfile(req):
     context['form'] = form
     return render(req,'editprofile.html',context)
 
+@login_required(login_url="/users/login/")
 def saveProfile(req):
     from .userLang import lang2
 
@@ -139,6 +142,7 @@ def saveProfile(req):
         return HttpResponseRedirect('/users/editprofile/')
 
 
+@login_required(login_url="/users/login/")
 def changePassword(req):
     from .userLang import lang2
 
@@ -176,6 +180,7 @@ def changePassword(req):
         return render(req,"changepassword.html",context)
 
 
+@login_required(login_url="/users/login/")
 def changeUsername(req):
     from .userLang import lang2
 

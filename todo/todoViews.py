@@ -6,6 +6,7 @@ from .todoForms import *
 from django.contrib import messages
 from .models import Todo
 from article.models import Article
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -40,7 +41,7 @@ def check(req):
         allArticles = len(Article.objects.all())
         context = {"allArticles":allArticles,"lang":lang2}
 
-
+@login_required(login_url="/users/login/")
 def addTodo(req):
     from .todoLang import lang2
     form = addTodoForm()
@@ -63,6 +64,7 @@ def addTodo(req):
     else:
         return render(req,"addtodo.html",context)
 
+@login_required(login_url="/users/login/")
 def myTodos(req):
     check(req)
     todos = Todo.objects.filter(author = req.user)
@@ -73,6 +75,7 @@ def myTodos(req):
     context['date'] = datetime.datetime.now()
     return render(req,"mytodos.html",context)
 
+@login_required(login_url="/users/login/")
 def completeTodo(req):
     from .todoLang import lang2
 
@@ -85,7 +88,7 @@ def completeTodo(req):
         messages.success(req,lang2['todoCompleted'])
     return HttpResponseRedirect('/todos/mytodos/')
 
-
+@login_required(login_url="/users/login/")
 def deleteTodo(req,id):
     from .todoLang import lang2
 
