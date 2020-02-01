@@ -131,15 +131,17 @@ def editArticle(req,id):
     context['id'] = id
     if(req.method == "POST"):
         
-
         form = addArticleForm(req.POST,req.FILES)
         if(form.is_valid()):
-            article = form.save(commit = False)
-            article.id = articleOld[0].id
-            article.createdDate = articleOld[0].createdDate
-            article.author = req.user
-            articleOld.delete()
-            article.save()
+            articleOld[0].content = form.cleaned_data.get("content")
+            articleOld[0].title = form.cleaned_data.get("title")
+            if(form.cleaned_data.get("articleImage")):
+                articleOld[0].articleImage = form.cleaned_data.get("articleImage")
+            else:
+                if(req.POST.get("articleImage-clear")):
+                    articleOld[0].articleImage = None
+                
+            articleOld[0].save()
             messages.success(req,lang2['articleUpdated'])
             return HttpResponseRedirect("/articles/myarticles/")
         else:
