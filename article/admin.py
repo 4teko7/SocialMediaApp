@@ -8,7 +8,7 @@ from .models import Article
 # admin.site.register(Article)
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ["id","title","author","createdDate","isPrivate"]
+    list_display = ["id","title","author","createdDate","isPrivate","articleImage"]
     list_display_links = ["title","createdDate"]
     search_fields = ["id","title"]
     list_filter = ["id","createdDate"]

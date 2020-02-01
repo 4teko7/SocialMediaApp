@@ -52,6 +52,9 @@ tr = {
     'addComment':"Yorum Ekle",
     'pageNotFound':"Sayfa Bulunamadı !",
     'private':"Bu Makale Gizlidir.",
+    'changePageStyle':"Sayfa Düzenini Değiştir",
+
+
 # MESSAGES
     'noTodo':"Henüz Planınız Yok",
     'todoAdded':"Planınız Başarıyla Eklendi",
@@ -135,6 +138,7 @@ en = {
     'pageNotFound':"Page Not Found !",
     'private':"This Article is Private",
     'cantedit':'You Cant Edit This Article',
+    'changePageStyle':"Change Page Style",
 
 
 

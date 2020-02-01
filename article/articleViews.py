@@ -58,11 +58,13 @@ def addArticle(req):
     global context
     context['form'] = form
     if(req.method == "POST"):
-        form = addArticleForm(req.POST)
+        form = addArticleForm(req.POST,req.FILES or None)
+        print(req.FILES)
         if(form.is_valid()):
             article = form.save(commit = False)
             article.author = req.user
             article.save()
+            print("ARTICLE IMG : ",article.articleImage)
             messages.success(req,lang2['articleAdded'])
             return HttpResponseRedirect("/articles/myarticles/")
         else:
@@ -86,7 +88,7 @@ def articleDetail(req,id):
     check(req)
     article = Article.objects.filter(id = id)
     if(not article):
-        return render(req,"pagenotfound.html",context)
+        return render(req,"warnings/pagenotfound.html",context)
     comments = Comment.objects.filter(article = article)
     commets = comments.order_by('createdDate')
     comments = comments[::-1]
@@ -94,11 +96,14 @@ def articleDetail(req,id):
     context['article'] = article[0]
     context['commentForm'] = commentForm
     context['comments'] = comments
+    if(article[0].articleImage):
+        context["image"] = article[0].articleImage.url
+        print(context['image'])
     if(article[0].isPrivate):
         if(article[0].author == req.user):
             return render(req,"articledetail.html",context)
         else:
-            return render(req,"articleprivate.html",context)
+            return render(req,"warnings/articleprivate.html",context)
     else:
         return render(req,"articledetail.html",context)
 

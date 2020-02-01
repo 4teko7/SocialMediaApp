@@ -25,9 +25,10 @@ from todo.todoLang import todoLanguage
 from article.articleLang import articleLanguage
 from users.userLang import userLanguage
 from comment.commentLang import commentLanguage
-
 from .language import *
 
+from django.conf import settings
+from django.conf.urls.static import static
 
 context = {}
 allArticles = 0
@@ -55,6 +56,7 @@ def search(req):
 
 def check(req):
     global context
+    global allArticles
     if(req.user.is_authenticated):
         allInfo(req)
         context = {
@@ -63,7 +65,6 @@ def check(req):
             "myArticles":myArticles
              }
     else:
-        global allArticles
         allArticles = len(Article.objects.all())
         context = {"allArticles":allArticles}
 
@@ -98,5 +99,4 @@ urlpatterns = [
     url('search/',search,name = 'search'),
     url('comments/',include('comment.commentRoutes')),
     url('language/',language,name = "language"),
-    url("",mainPage,name="mainPage")
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

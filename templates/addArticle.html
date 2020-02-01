@@ -1,16 +1,26 @@
 {% extends 'layout.html' %}
 {% load crispy_forms_tags %}
-
+enctype="multipart/form-data"
 {% block body %}
+<style>
+#id_articleImage{
 
+
+    background-color: cornflowerblue;
+    height:3rem;
+}
+
+</style>
 <div class="container">
     <div class="row">
 
-        <div class="col align-self-center">
+        <div class="col-md-8 col-lg-8 col-xs-8 align-self-center">
         <h1>{{lang.addArticle}}</h1>
             <hr>
-            <form action="/articles/addarticle/" method="POST">
+            <form action="/articles/addarticle/" method="POST" enctype="multipart/form-data">
+                
                 {% csrf_token %}
+                {{form.media}}
                 {{form|crispy}}
                 <button type="submit" class="btn btn-danger">{{lang.addArticle}}</button>
             </form>
@@ -18,4 +28,8 @@
 
     </div>
 </div>
+<br>
+<br>
+
 {% endblock body %}
+

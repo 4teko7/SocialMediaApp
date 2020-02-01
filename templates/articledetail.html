@@ -27,7 +27,7 @@ hr{
       
         <!-- Post Content Column -->
         <div class="col-lg-8 col-md-8 col-xs-12">
-          <button id = "changePageStyle" class = "btn btn-primary pull-right" style = "margin-top:2rem;" onclick = "changePageStyle()">Change Page Style</button>
+          <button id = "changePageStyle" class = "btn btn-primary pull-right" style = "margin-top:2rem;" onclick = "changePageStyle()">{{lang.changePageStyle}}</button>
           <!-- Title -->
           <div style="text-align: center; margin-top: 2rem; margin-bottom:2rem; margin-right:1rem;" class = "pull-right">
             <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
@@ -52,12 +52,13 @@ hr{
           <hr>
   
           <!-- Preview Image -->
-          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+         {% if article.articleImage %}
+          <img class="img-fluid rounded" style = "width:100%;"src="{{article.articleImage.url}}" alt="My Image">
   
           <hr>
-  
+          {% endif %}
           <!-- Post Content -->
-          <p class="lead">{{article.content}}</p>
+          <p class="lead">{{article.content|safe}}</p>
           <hr >
   
           <!-- ADD COMMENT  -->
@@ -229,10 +230,14 @@ hr{
             <hr style = "height: 5px;background-color: red; margin-right:2rem">
 
 
-        
+            {% if article.articleImage %}
+            <img class="img-fluid rounded" style = "width:100%;"src="{{article.articleImage.url}}" alt="My Image">
+    
+            <hr>
+            {% endif %}
 
                 
-            <div style = "word-wrap: break-word;">{{article.content}}</div>
+            <div style = "word-wrap: break-word;">{{article.content|safe}}</div>
             
             <hr style = "margin-right:2rem">
                 
