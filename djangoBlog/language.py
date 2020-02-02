@@ -59,6 +59,7 @@ tr = {
     "searchUser":"Kullanıcı Ara",
     "users":"Kullanıcılar",
     'firstandlastname':"İsim ve Soyisim",
+    'pleaselogin':"Daha Fazla Özellik İçin Lütfen Giriş Yapınız.",
 
 
 # MESSAGES
@@ -152,6 +153,7 @@ en = {
     "searchUser":"Search User",
     "users":"Users",
     'firstandlastname':"Full Name",
+    'pleaselogin':"Please Login For More Features.",
 
 
 

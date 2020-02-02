@@ -69,22 +69,21 @@ def mainPage(req):
     global context
 
     check(req)
-    articles = Article.objects.filter(author = req.user)
-    articles = articles.order_by('id')
-    articles = articles[::-1]
-    articles = list(articles[:4])
-    context['articles'] = articles
+    if(req.user.is_authenticated):
+        articles = Article.objects.filter(author = req.user)
+        articles = articles.order_by('id')
+        articles = articles[::-1]
+        articles = list(articles[:4])
+        context['articles'] = articles
 
 
-    todos = Todo.objects.filter(author = req.user)
-    todos = todos.order_by('date')
-    todos = list(filter(lambda x: not x.iscompleted, todos))
-    todos = todos[:4]
-
-    context['todos'] = todos
+        todos = Todo.objects.filter(author = req.user)
+        todos = todos.order_by('date')
+        todos = list(filter(lambda x: not x.iscompleted, todos))
+        todos = todos[:4]
+        context['todos'] = todos
+        
     context['date'] = datetime.datetime.now()
-
-
     context['lang'] = lang
     return render(req,"index.html",context)
     
