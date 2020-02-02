@@ -209,3 +209,12 @@ def changeUsername(req):
             return HttpResponseRedirect('/users/changeusername/')
     else:
         return render(req,"changeusername.html",context)
+
+
+def profile(req,id):
+    check(req)
+    user = User.objects.get(id = id)
+    context['user'] = user
+    return render(req,'profile.html',context)
+
+

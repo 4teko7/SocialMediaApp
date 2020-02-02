@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<div class = "container" style = "margin-top:20px;">
+    <h3>{{lang.about}}</h3>
+    <hr>
+        <h4>{{lang.username}} : <strong><em>{{user.username}}</em></strong></h4>
+        <h4>{{lang.firstname}} : <strong><em>{{user.first_name}}</em></strong></h4>
+        <h4>{{lang.lastname}} : <strong><em>{{user.last_name}}</em></strong></h4>
+        <h4>{{lang.email}} : <strong><em>{{user.email}}</em></strong></h4>
+        <h4>{{lang.lastLogin}} : <strong><em>{{user.last_login}}</em></strong></h4>
+        <h4>{{lang.joined}} : <strong><em>{{user.date_joined}}</em></strong></h4>
+        <div style="text-align: center; margin-top: 1rem; margin-bottom:2rem;" class = "pull-right">
+            <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
+            
+        </div>
+    
+   
+    </div>
+
+
+
+
+
+
+{% endblock body %}
