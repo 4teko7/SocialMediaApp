@@ -28,7 +28,7 @@ def allInfo(req):
 
 def check(req):
     from .userLang import lang2
-
+    global allArticles
     global context
     if(req.user.is_authenticated):
         allInfo(req)
@@ -39,7 +39,6 @@ def check(req):
             "lang":lang2
              }
     else:
-        global allArticles
         allArticles = len(Article.objects.all())
         context = {"allArticles":allArticles,"lang":lang2}
 

@@ -26,6 +26,7 @@ def allInfo(req):
 
 
 def check(req):
+    global allArticles
     from .articleLang import lang2
     global context
     if(req.user.is_authenticated):
@@ -37,7 +38,6 @@ def check(req):
             "lang":lang2
              }
     else:
-        global allArticles
         allArticles = len(Article.objects.all())
         context = {"allArticles":allArticles,
                     "lang":lang2
@@ -83,6 +83,7 @@ def myArticles(req):
     return render(req,"myarticles.html",context)
 
 def articleDetail(req,id):
+    global context
     commentForm = CommentForm()
     check(req)
     article = Article.objects.filter(id = id)
@@ -91,7 +92,6 @@ def articleDetail(req,id):
     comments = Comment.objects.filter(article = article)
     commets = comments.order_by('createdDate')
     comments = comments[::-1]
-    global context
     context['article'] = article[0]
     context['commentForm'] = commentForm
     context['comments'] = comments
@@ -117,6 +117,7 @@ def allArticles(req):
 
 @login_required(login_url="/users/login/")
 def editArticle(req,id):
+    global context
     from .articleLang import lang2
 
     check(req)
@@ -126,7 +127,6 @@ def editArticle(req,id):
         return render(req,"warnings/canteditarticle.html",context)
 
     form = addArticleForm(initial={'title': articleOld[0].title,'content':articleOld[0].content,'isPrivate':articleOld[0].isPrivate,'articleImage':articleOld[0].articleImage})
-    global context
     context['form'] = form
     context['id'] = id
     if(req.method == "POST"):
