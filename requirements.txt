@@ -1,6 +1,6 @@
-Django
-django-ckeditor
+Django=1.11.27
+django-ckeditor=5.7.1
 django-cleanup
 django-crispy-forms
 django-js-asset
-Pillow
+Pillow=6.1.0
