@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block body %}
+
+<h1 style = 'text-align:center; margin-top:1rem;'>{{lang.users}}</h1>
+<hr>
+<div class="container col-md-12 col-xs-12 col-lg-12 " style="margin-top:1rem;  ">
+    <div class=" ">
+                
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+        <th scope="col" style = "word-wrap: break-word;">{{lang.username}}</th>
+        <th scope="col">{{lang.firstandlastname}}</th>
+        <th scope="col">{{lang.joined}}</th>
+
+        </tr>
+    </thead>
+    <tbody>
+  {% if users %}
+        {% for user in users%}
+            <tr>
+            <td><a href = "/users/profile/{{user.id}}/">{{user.username}}</a></td>
+            <td>{{user.first_name}} {{user.last_name}}</td>
+            <td>{{user.date_joined}}</td>
+
+            <td>
+                <a href = "/users/profile/{{user.id}}/"><button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button></a>
+            </td>
+            </tr>
+
+        {% endfor %}
+{% else %}
+        <div class="alert alert-warning">
+            {{lang.noUser}}
+        </div>
+{% endif %}
+    </tbody>
+    </table>  
+                
+               
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock body %}
+
+
+
+

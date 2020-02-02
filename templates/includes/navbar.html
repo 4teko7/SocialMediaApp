@@ -6,7 +6,7 @@
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
   <form action = "/language/" method = "GET">
-    <input name = "currentPage" type="hidden" value = "{{ request.path }}">
+    <input name = "currentPage" type="hidden" value = "{{ request.get_full_path }}">
     <button  type = "submit" class="btn btn-info" style = "margin-right:0.5rem;">{{lang.language}}</button>
   </form>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,8 +111,12 @@
         </a>
       </li>
 </ul>
-    <form action = '/search/' class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" name = "keywords" type="text" placeholder="{{lang.searchArticle}}" aria-label="Search">
+<form action = '/searchUser/' class="form-inline my-2 my-lg-0" style = "margin-right:0.5rem;">
+  <input class="form-control mr-sm-2" name = "keywords" style = "width:8rem; float:right" type="text" placeholder="{{lang.searchUser}}" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{lang.search}}</button>
+</form>
+    <form action = '/searchArticle/' class="form-inline my-2 my-lg-0" style = "margin-right:0.5rem;">
+      <input class="form-control mr-sm-2" name = "keywords" style = "width:8rem;" type="text" placeholder="{{lang.searchArticle}}" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{lang.search}}</button>
     </form>
   </div>

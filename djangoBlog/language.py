@@ -53,6 +53,12 @@ tr = {
     'pageNotFound':"Sayfa Bulunamadı !",
     'private':"Bu Makale Gizlidir.",
     'changePageStyle':"Sayfa Düzenini Değiştir",
+    'todoStatus':"Plan Durumu",
+    'comingTodos':"Yaklaşan Planlar",
+    'recentArticles':"Son Makaleleriniz",
+    "searchUser":"Kullanıcı Ara",
+    "users":"Kullanıcılar",
+    'firstandlastname':"İsim ve Soyisim",
 
 
 # MESSAGES
@@ -78,6 +84,7 @@ tr = {
     'formInvalid':"Form Hatalı !",
     'fullname':'Isminizi Giriniz.',
     'cantedit':'Sizin Olmayan Makaleyi Düzenleyemezsiniz !',
+    "noUser":"Kullanıcı Bulunamadı.",
 
 
 }
@@ -139,6 +146,13 @@ en = {
     'private':"This Article is Private",
     'cantedit':'You Cant Edit This Article',
     'changePageStyle':"Change Page Style",
+    'todoStatus':"Todo Status",
+    'comingTodos':"Coming Todos",
+    'recentArticles':"Your Recent Articles",
+    "searchUser":"Search User",
+    "users":"Users",
+    'firstandlastname':"Full Name",
+
 
 
 
@@ -164,7 +178,9 @@ en = {
     'newsdiff':'New Password and New Password Confirm are Different !',
     'passwordChanged':"Password is Successfully Changed",
     'fullname':'Full Name',
-    'formInvalid':"Form is Invalid"
+    'formInvalid':"Form is Invalid",
+    "noUser":"User Not Found",
+    
 }
 
 

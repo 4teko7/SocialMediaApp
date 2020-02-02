@@ -3,14 +3,27 @@
 {% block body %}
 
 
-<div class="jumbotron">
+    <style>
+        
+        
+        
+        #bg {
+          /* The image used */
+        
+          /* Full height */
+          height: 100%; 
+        background-color: powderblue;
 
-    {{lang.welcome}}, {% if request.user.is_authenticated %} {{ request.user.username }}  {% endif %}
+        }
+        </style>
 
-</div>
     {% if request.user.is_authenticated %}
-
-<div class="container" style = "text-align:center;">
+<div  id = "bg">
+<div class="container"   style = "margin : auto auto;text-align:center;" >
+<br><br>
+        <h2>{{lang.welcome}}, {% if request.user.is_authenticated %} {{ request.user.username }}  {% endif %}</h2>
+        <hr>
+    <br>
     <div class="row">
         <div class="col-md-6 col-lg-4 col-xs-12">
         <a href = "/users/editprofile/"><scan style = "font-size:1.5rem;">{{lang.editProfile}}<br><img style = "width:6rem;height:6rem;"src={% static 'img/editProfile.png' %}></scan></a>
@@ -18,17 +31,91 @@
         <a href = "/users/changepassword/"><scan style = "font-size:1.5rem;">{{lang.changePassword}}<br><img style = "width:6rem;height:6rem;"src={% static 'img/password.png' %}></scan></a>
         <br><br>
         <a href = "/users/changeusername/"><scan style = "font-size:1.5rem;">{{lang.changeUsername}}<br><img style = "width:8rem;height:8rem;"src={% static 'img/username.png' %}></scan></a>
+        <!-- <br><hr style = "background-color: red; width:100%; height:0.1rem; border-radius:50%;"><br> -->
+        <br><br><br>
     </div>
-    <div class="col-md-6 col-lg-4 col-xs-12">
-        <!-- RECENT TODOS  -->
+
+    <div class="col-md-6 col-lg-4 col-xs-12"  style = "margin : auto auto;">
+        <!-- RECENT comingTodos  -->
+
+        <h3>{{lang.comingTodos}}</h3>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">{{lang.date}}</th>
+                <th scope="col" style = "word-wrap: break-word;">{{lang.content}}</th>
+                <th scope="col" style = "word-wrap: break-word;">{{lang.todoStatus}}</th>
+              </tr>
+            </thead>
+            <tbody>
+                <hr>
+
+                {% if todos %}
+                     {% for todo in todos %}
+                        <tr>
+                        <th scope="row">{{todo.date}}</th>
+                        <td><a href = "/todos/mytodos/">{{todo.content}}</a></td>
+                        <td>
+                        {% if todo.iscompleted %}
+
+                        <img  style="width:3rem; height:3rem; ;" src={% static 'img/icon-yes.svg' %}>
+                        {% else %}
+
+                        <img  style="width:3rem; height:3rem;;" src={% static 'img/icon-no.svg' %}>
+
+                        {% endif %}
+                    </td>
+
+                        </tr>
+                    {% endfor %}
+            {% else %}
+                    <div class="alert alert-warning">
+                        {{lang.noTodos}}
+                    </div>
+            {% endif %}
+
+            </tbody>
+        </table>
+        <!-- <br><hr style = "background-color: red; width:100%; height:0.1rem; border-radius:50%;"><br> -->
+        <br><br>
+
+    </div>
+    <div class="col-md-6 col-lg-4 col-xs-12"  style = "margin : auto auto;">
+        <!-- RECENT ARTICLES   -->
+        <h3>{{lang.recentArticles}}</h3>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">{{lang.id}}</th>
+                <th scope="col" style = "word-wrap: break-word;">{{lang.title}}</th>
+                <th scope="col">{{lang.createdDate}}</th>
+          
+              </tr>
+            </thead>
+            <tbody>
+                <hr>
+                {% if articles %}
+                     {% for article in articles %}
+                        <tr>
+                        <th scope="row">{{article.id}}</th>
+                        <td><a href = "/articles/articledetail/{{article.id}}/">{{article.title}}</a></td>
+                        <td>{{article.createdDate}}</td>
+                        </tr>
+                    {% endfor %}
+            {% else %}
+                    <div class="alert alert-warning">
+                        {{lang.noArticle}}
+                    </div>
+            {% endif %}
+            </tbody>
+        </table>  
 
         
-    </div>
-    <div class="col-md-6 col-lg-4 col-xs-12">
-        <!-- RECENT ARTICLES  -->
-
         
     </div>
+</div>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
 </div>
 </div>
 {% endif %}

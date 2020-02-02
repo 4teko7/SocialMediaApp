@@ -18,6 +18,7 @@ Including another URLconf
 from __future__ import unicode_literals
 from django.conf.urls import url,include
 from django.shortcuts import render,HttpResponse,redirect
+from django.contrib.auth.models import User
 from django.contrib import admin
 from article.models import Article
 from todo.models import Todo
@@ -26,6 +27,7 @@ from article.articleLang import articleLanguage
 from users.userLang import userLanguage
 from comment.commentLang import commentLanguage
 from .language import *
+import datetime
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -35,24 +37,7 @@ allArticles = 0
 myTodos = 0
 myArticles = 0
 lang = en
-def mainPage(req): 
-    check(req)
-    global lang
-    global context
-    context['lang'] = lang
-    return render(req,"index.html",context)
-    
 
-
-def search(req):
-    keywords = req.GET.get('keywords')
-    if(keywords):
-        articles = Article.objects.filter(title__contains = keywords)
-        global context
-        global lang
-        context['articles'] = articles
-        context['lang'] = lang
-        return render(req,'allarticles.html',context)
 
 def check(req):
     global context
@@ -77,6 +62,60 @@ def allInfo(req):
     myTodos = len(Todo.objects.filter(author = req.user))
     myArticles = len(Article.objects.filter(author = req.user))
 
+
+
+def mainPage(req): 
+    global lang
+    global context
+
+    check(req)
+    articles = Article.objects.filter(author = req.user)
+    articles = articles.order_by('id')
+    articles = articles[::-1]
+    articles = list(articles[:4])
+    context['articles'] = articles
+
+
+    todos = Todo.objects.filter(author = req.user)
+    todos = todos.order_by('date')
+    todos = list(filter(lambda x: not x.iscompleted, todos))
+    todos = todos[:4]
+
+    context['todos'] = todos
+    context['date'] = datetime.datetime.now()
+
+
+    context['lang'] = lang
+    return render(req,"index.html",context)
+    
+
+
+def searchArticle(req):
+    check(req)
+    keywords = req.GET.get('keywords')
+    if(keywords):
+        articles = Article.objects.filter(title__contains = keywords)
+        global context
+        global lang
+        context['articles'] = articles
+        context['lang'] = lang
+        return render(req,'allarticles.html',context)
+
+def searchUser(req):
+    check(req)
+    keywords = req.GET.get('keywords')
+    if(keywords):
+        users = User.objects.filter(username__contains = keywords)
+        global context
+        global lang
+        context['users'] = users
+        context['lang'] = lang
+        return render(req,'allusers.html',context)
+    else:
+        return render(req,'allusers.html',context)
+
+
+
 def language(req):
     global lang
     global context
@@ -96,7 +135,8 @@ urlpatterns = [
     url('users/', include("users.userRoutes")),
     url("articles/",include("article.articleRoutes")),
     url("todos/",include("todo.todoRoutes")),
-    url('search/',search,name = 'search'),
+    url('searchArticle/',searchArticle,name = 'searchArticle'),
+    url('searchUser/',searchUser,name = "searchUser"),
     url('comments/',include('comment.commentRoutes')),
     url('language/',language,name = "language"),
     url('^$',mainPage,name = "mainPage"),
