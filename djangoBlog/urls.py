@@ -91,29 +91,28 @@ def mainPage(req):
 
 
 def searchArticle(req):
+    global context
+    global lang
     check(req)
+    context['lang'] = lang
     keywords = req.GET.get('keywords')
     if(keywords):
         articles = Article.objects.filter(title__contains = keywords)
-        global context
-        global lang
         context['articles'] = articles
-        context['lang'] = lang
-        return render(req,'allarticles.html',context)
-
+    return render(req,'allarticles.html',context)
+    
 def searchUser(req):
+    global context
+    global lang
     check(req)
     keywords = req.GET.get('keywords')
+    context['lang'] = lang
     if(keywords):
         users = User.objects.filter(username__contains = keywords)
-        global context
-        global lang
+        
         context['users'] = users
-        context['lang'] = lang
-        return render(req,'allusers.html',context)
-    else:
-        return render(req,'allusers.html',context)
-
+    return render(req,'allusers.html',context)
+   
 
 
 def language(req):
