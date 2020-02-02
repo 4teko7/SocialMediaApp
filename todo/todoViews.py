@@ -26,6 +26,8 @@ def allInfo(req):
 # "allArticles":allArticles,"myTodos":myTodos,"myArticles":myArticles
 
 def check(req):
+    global allArticles
+
     from .todoLang import lang2
     global context
     if(req.user.is_authenticated):
@@ -37,7 +39,6 @@ def check(req):
             "lang":lang2
              }
     else:
-        global allArticles
         allArticles = len(Article.objects.all())
         context = {"allArticles":allArticles,"lang":lang2}
 
