@@ -1,5 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import UserProfile
+
+
+
+class addProfileImageForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ["profileImage"]
+
 
 class ChangeUsername(forms.Form):
     newUsername = forms.CharField(max_length = 30,label = "New Username")

@@ -60,6 +60,7 @@ tr = {
     "users":"Kullanıcılar",
     'firstandlastname':"İsim ve Soyisim",
     'pleaselogin':"Daha Fazla Özellik İçin Lütfen Giriş Yapınız.",
+    "changeProfilFoto":"Profil Fotoğrafını Ekle/Değiştir",
 
 
 # MESSAGES
@@ -154,6 +155,7 @@ en = {
     "users":"Users",
     'firstandlastname':"Full Name",
     'pleaselogin':"Please Login For More Features.",
+    "changeProfilFoto":"Add or Remove Profil Photo",
 
 
 

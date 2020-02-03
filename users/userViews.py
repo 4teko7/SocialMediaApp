@@ -10,7 +10,6 @@ from .models import UserProfile
 from todo.models import Todo
 from article.models import Article
 from django.contrib.auth.decorators import login_required
-
 # Create your views here.
 context = {}
 
@@ -47,8 +46,10 @@ def check(req):
 def about(req):
     check(req)
     global context
-    userProfile = UserProfile.objects.get(user = req.user)
-    context['profileImage'] = userProfile.profileImage
+    profile = UserProfile.objects.filter(user = req.user)
+    if(profile):
+        if(profile[0].profileImage):
+            context['profileImage'] = profile[0].profileImage
     return render(req,"about.html",context)
 
 def registerUser(req):
@@ -143,6 +144,45 @@ def saveProfile(req):
     else:
         return HttpResponseRedirect('/users/editprofile/')
 
+def addProfileImage(req):
+    from .userLang import lang2
+    check(req)
+    global context
+    profile = UserProfile.objects.filter(user=req.user)
+
+    if(req.method == "POST"):
+        form = addProfileImageForm(req.POST,req.FILES or None)
+        if(form.is_valid()):
+            if(form.cleaned_data.get("profileImage")):
+                if(UserProfile.objects.count() > 0):
+                    profile.delete()
+                profile = form.save(commit = False)
+                profile.user = req.user
+                profile.profileImage = form.cleaned_data.get("profileImage")
+                profile.save()
+            else:
+                print("SILMEYE GELDI")
+                if(req.POST.get("profileImage-clear")):
+                    print("SILMEYE GELDI ICERIDE")
+                    if(profile):
+                        if(profile[0].profileImage):
+                            profile[0].profileImage = None
+                            profile[0].save()
+            # article.author = req.user
+            
+            messages.success(req,lang2['articleAdded'])
+            return HttpResponseRedirect("/users/about/")
+        else:
+
+            return render(req,"addprofileimage.html",context)
+    else:
+        form = addProfileImageForm()
+        if(profile):
+            if(profile[0].profileImage):
+                context['profileImage'] = profile[0].profileImage
+                form = addProfileImageForm(initial={'profileImage': profile[0].profileImage})
+        context['form'] = form
+        return render(req,"addprofileimage.html",context)
 
 @login_required(login_url="/users/login/")
 def changePassword(req):

@@ -10,8 +10,7 @@ from .models import UserProfile
 # admin.site.register(Article)
 @admin.register(UserProfile)
 class userAdmin(admin.ModelAdmin):
-    pass
-    # list_display = ["profileImage"]
+    list_display = ["profileImage"]
     # # list_display_links = []
     # # search_fields = []
     # # list_filter = []

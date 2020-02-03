@@ -28,6 +28,7 @@ from users.userLang import userLanguage
 from comment.commentLang import commentLanguage
 from .language import *
 import datetime
+from users.models import UserProfile
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -85,6 +86,10 @@ def mainPage(req):
         
     context['date'] = datetime.datetime.now()
     context['lang'] = lang
+    profile = UserProfile.objects.filter(user = req.user)
+    if(profile):
+        if(profile[0].profileImage):
+            context['profileImage'] = profile[0].profileImage    
     return render(req,"index.html",context)
     
 

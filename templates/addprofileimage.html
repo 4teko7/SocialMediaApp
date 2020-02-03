@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<style>
+#id_profileImage{
+
+
+    background-color: cornflowerblue;
+    height:3rem;
+}
+
+</style>
+<div class="container col-md-12 col-lg-12 col-xs-12">
+    <div class="container">
+
+        <h1>{{lang.editProfile}}</h1>
+            <hr>
+                <div class = "container col-lg-6 col-xs-12 col-md-6" align="middle" style = " margin : auto auto;">
+                <strong><img style = "witdh:18rem; height:18rem;"  alt = "Profile Image Is Empty" src = "{{profileImage.url}}"></strong>
+                </div>
+            <hr>
+
+            <form action="/users/addprofileimage/" method="POST" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                {{form.media}}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+            </form>
+        </div>
+
+</div>
+<br>
+<br>
+
+{% endblock body %}
+

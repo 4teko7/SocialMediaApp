@@ -10,7 +10,7 @@ from django.db.models.signals import post_save
 class UserProfile(models.Model):
     from .userLang import lang2
     user = models.OneToOneField(User)
-    username2 = models.CharField(max_length = 30,verbose_name = lang2['username'])
+    # username2 = models.CharField(max_length = 30,verbose_name = lang2['username'])
     # email = models.EmailField(max_length = 70,verbose_name = lang2['email'])
     # name = models.CharField(max_length = 30,verbose_name = lang2['firstname'])
     # surname = models.CharField(max_length = 30,verbose_name = lang2['lastname'])
