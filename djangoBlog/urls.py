@@ -65,7 +65,7 @@ def allInfo(req):
 
 
 
-def mainPage(req): 
+def mainPage(req):
     global lang
     global context
 
@@ -83,15 +83,15 @@ def mainPage(req):
         todos = list(filter(lambda x: not x.iscompleted, todos))
         todos = todos[:4]
         context['todos'] = todos
-        
+
+        profile = UserProfile.objects.filter(user = req.user)
+        if(profile):
+            if(profile[0].profileImage):
+                context['profileImage'] = profile[0].profileImage
     context['date'] = datetime.datetime.now()
     context['lang'] = lang
-    profile = UserProfile.objects.filter(user = req.user)
-    if(profile):
-        if(profile[0].profileImage):
-            context['profileImage'] = profile[0].profileImage    
     return render(req,"index.html",context)
-    
+
 
 
 def searchArticle(req):
@@ -104,7 +104,7 @@ def searchArticle(req):
         articles = Article.objects.filter(title__contains = keywords)
         context['articles'] = articles
     return render(req,'allarticles.html',context)
-    
+
 def searchUser(req):
     global context
     global lang
@@ -113,10 +113,10 @@ def searchUser(req):
     context['lang'] = lang
     if(keywords):
         users = User.objects.filter(username__contains = keywords)
-        
+
         context['users'] = users
     return render(req,'allusers.html',context)
-   
+
 
 
 def language(req):
