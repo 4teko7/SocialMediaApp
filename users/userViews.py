@@ -258,6 +258,10 @@ def profile(req,id):
     check(req)
     user = User.objects.get(id = id)
     context['user'] = user
+    profile = UserProfile.objects.filter(user = user)
+    if(profile):
+        if(profile[0].profileImage):
+            context['profileImage'] = profile[0].profileImage
     return render(req,'profile.html',context)
 
 

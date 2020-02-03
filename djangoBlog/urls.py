@@ -113,8 +113,8 @@ def searchUser(req):
     context['lang'] = lang
     if(keywords):
         users = User.objects.filter(username__contains = keywords)
-
         context['users'] = users
+        
     return render(req,'allusers.html',context)
 
 
