@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
 from .userForms import *
+from .models import UserProfile
 from todo.models import Todo
 from article.models import Article
 from django.contrib.auth.decorators import login_required
@@ -46,6 +47,8 @@ def check(req):
 def about(req):
     check(req)
     global context
+    userProfile = UserProfile.objects.get(user = req.user)
+    context['profileImage'] = userProfile.profileImage
     return render(req,"about.html",context)
 
 def registerUser(req):
