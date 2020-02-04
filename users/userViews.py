@@ -21,7 +21,7 @@ def allInfo(req):
     global allArticles
     global myTodos
     global myArticles
-    allArticles = len(Article.objects.all())
+    allArticles = len(Article.objects.filter(isPrivate = False))
     myTodos = len(Todo.objects.filter(author = req.user))
     myArticles = len(Article.objects.filter(author = req.user))
 # "allArticles":allArticles,"myTodos":myTodos,"myArticles":myArticles
@@ -39,7 +39,7 @@ def check(req):
             "lang":lang2
              }
     else:
-        allArticles = len(Article.objects.all())
+        allArticles = len(Article.objects.filter(isPrivate = False))
         context = {"allArticles":allArticles,"lang":lang2}
 
 @login_required(login_url="/users/login/")

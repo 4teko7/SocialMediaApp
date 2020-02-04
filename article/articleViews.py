@@ -42,7 +42,7 @@ def check(req):
             "lang":lang2
              }
     else:
-        allArticles = len(Article.objects.all())
+        allArticles = len(Article.objects.filter(isPrivate = False))
         context = {"allArticles":allArticles,
                     "lang":lang2
             }
