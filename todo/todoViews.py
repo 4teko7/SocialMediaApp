@@ -70,9 +70,18 @@ def myTodos(req):
     check(req)
     todos = Todo.objects.filter(author = req.user)
     todos = todos.order_by('date')
-    todos = todos.order_by('iscompleted')
+    todos = list(filter(lambda x: not x.iscompleted, todos))
+
+
+    todosCompleted = Todo.objects.filter(author = req.user)
+    todosCompleted = todosCompleted.order_by('date')
+    todosCompleted = list(filter(lambda x: x.iscompleted, todosCompleted))
+    todos += todosCompleted
+
+
     global context
     context['todos'] = todos
+
     context['date'] = datetime.datetime.now()
     return render(req,"mytodos.html",context)
 
