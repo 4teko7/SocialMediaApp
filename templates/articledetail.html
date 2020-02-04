@@ -11,7 +11,7 @@
   .media {
     display: "flex";
     align-items: "flex-start";
-    
+
 }
 hr{
   background-color: aquamarine;
@@ -24,55 +24,55 @@ hr{
 
 
     <div class="row">
-      
+
         <!-- Post Content Column -->
         <div class="col-lg-8 col-md-8 col-xs-12">
           <button id = "changePageStyle" class = "btn btn-primary pull-right" style = "margin-top:2rem;" onclick = "changePageStyle()">{{lang.changePageStyle}}</button>
           <!-- Title -->
           <div style="text-align: center; margin-top: 2rem; margin-bottom:2rem; margin-right:1rem;" class = "pull-right">
             <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
-            
+
         </div>
           <h1 class="mt-4">{{article.title}}</h1>
-  
+
           <!-- Author -->
-          
+
           <p class="lead">
             {{lang.by}}
-            
+
             <a href="#">{{article.author}}</a>
-            
+
           </p>
-  
+
           <hr>
-  
+
           <!-- Date/Time -->
           <p>Posted on {{article.createdDate}}</p>
-  
+
           <hr>
-  
+
           <!-- Preview Image -->
          {% if article.articleImage %}
           <img class="img-fluid rounded" style = "width:100%;"src="{{article.articleImage.url}}" alt="My Image">
-  
+
           <hr>
           {% endif %}
           <!-- Post Content -->
           <p class="lead">{{article.content|safe}}</p>
           <hr >
-  
+
           <!-- ADD COMMENT  -->
           <div class="container">
             <div class="row">
-        
+
                 <div style = "text-align:center; " class="col align-self-center">
                 <h1>{{lang.whatDoYouThink}}</h1>
                     <hr>
                     {% if request.user.is_authenticated %}
                     <form action="/comments/addcomment/{{article.id}}/" method="POST">
                         {% csrf_token %}
-                        
-                       
+
+
                         {{commentForm|crispy}}
                         <button type="submit" class="btn btn-danger">{{lang.save}}</button>
                     </form>
@@ -82,27 +82,33 @@ hr{
                     <button type="submit" class="btn btn-danger">{{lang.save}}</button>
                     {% endif %}
                 </div>
-        
+
             </div>
         </div>
-        
+
           <!-- END OF ADD COMMENT  -->
 
           <!-- Comments Form -->
 
-
-                                        <!-- COMMENT TO COMMENT -->
-
+ {% comment %} {% with name="World" %}
+<html>
+<div>Hello {{name}}!</div>
+</html>
+{% endwith %} {% endcomment %}
 
           {% for comment in comments%}
           <div class="media mb-4">
+            {% if comment.userImage %}
+            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment.userImage.url}}" alt="">
+            {% else %}
             <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            {% endif%}
             <div  class="media-body" style = " word-wrap: break-word;">
               <h5 class="mt-0">{{comment.author}}</h5>
               <a href = "#commentForm{{comment.id}}"><button style = "font-size:0.8rem; display :inline;" name = "replyDiv{{comment.id}}" class = "btn btn-danger pull-right" onclick = "reply(this.name)">Reply</button></a>
 
               <div id = "commentForm{{comment.id}}">
-              {{comment.content}}  
+              {{comment.content}}
             </div>
 
               {% include "includes/replyComment.html" %}
@@ -111,22 +117,26 @@ hr{
               {% for comment2 in comment.comments %}
 
               {% if comment2.id == comment.id %}
-              
+
               <div class="media mt-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                      {% if comment2.userImage %}
+                      <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment2.userImage.url}}" alt="asda">
+                      {% else %}
+                      <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                      {% endif%}
                 <div class="media-body" style = " word-wrap: break-word;">
                   <h5 class="mt-0">{{comment2.author}}</h5>
                   {{comment2.content}}
                 </div>
               </div>
               {% endif %}
-              
+
               {% endfor %}
-              
+
               <hr>
 
-             
-  
+
+
             </div >
           </div>
           {% endfor %}
@@ -134,27 +144,27 @@ hr{
 
 
 
-       
-          
-          
+
+
+
                                         <!-- END OF COMMENT TO COMMENT -->
 
-        
 
 
 
-  
-          
-  
+
+
+
+
         </div>
-  
+
         <!-- Sidebar Widgets Column -->
-        
-  
+
+
       </div>
       <!-- /.row -->
     </div>
-    
+
     <br><br>
 
 
@@ -167,27 +177,27 @@ hr{
     <p style = "display:inline; margin-right:1rem;"><em>{{article.createdDate}}</em></p>
 
         <br><br>
-            
+
             <div style = "font-weight: bold; word-wrap: break-word; text-align:center;">{{article.title}}</div>
             <hr style = "height: 5px;background-color: red; margin-right:2rem">
 
 
             {% if article.articleImage %}
             <img class="img-fluid rounded" style = "width:100%;"src="{{article.articleImage.url}}" alt="My Image">
-    
+
             <hr>
             {% endif %}
 
-                
+
             <div style = "word-wrap: break-word;">{{article.content|safe}}</div>
-            
+
             <hr style = "margin-right:2rem">
-                
+
 
     </div>
     <div style="text-align: center; margin-top: 2rem; margin-bottom:2rem;" class = "pull-right">
         <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
-        
+
     </div>
 </div>
 <br><br><br><br>
@@ -202,8 +212,8 @@ hr{
             {% if request.user.is_authenticated %}
             <form action="/comments/addcomment/{{article.id}}/" method="POST">
                 {% csrf_token %}
-                
-               
+
+
                 {{commentForm|crispy}}
                 <button type="submit" class="btn btn-danger">{{lang.save}}</button>
             </form>
@@ -221,37 +231,45 @@ hr{
 <div class="container" style = "margin-top:2rem;">
                       {% for comment in comments%}
                       <div class="media mb-4">
-                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            {% if comment.userImage %}
+                            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment.userImage.url}}" alt="">
+                            {% else %}
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            {% endif%}
                         <div  class="media-body" style = " word-wrap: break-word;">
                           <h5 class="mt-0">{{comment.author}}</h5>
                           <a href = "#commentForm2{{comment.id}}"><button style = "font-size:0.8rem; display :inline;" name = "replyDiv2{{comment.id}}" class = "btn btn-danger pull-right" onclick = "reply(this.name)">Reply</button></a>
-            
+
                           <div id = "commentForm2{{comment.id}}">
-                          {{comment.content}}  
+                          {{comment.content}}
                         </div>
-            
+
                           {% include "includes/replyComment2.html" %}
-            
-            
+
+
                           {% for comment2 in comment.comments %}
-            
+
                           {% if comment2.id == comment.id %}
-                          
+
                           <div class="media mt-4">
+                            {% if comment2.userImage %}
+                            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment2.userImage.url}}" alt="asdsa">
+                            {% else %}
                             <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            {% endif%}
                             <div class="media-body" style = " word-wrap: break-word;">
                               <h5 class="mt-0">{{comment2.author}}</h5>
                               {{comment2.content}}
                             </div>
                           </div>
                           {% endif %}
-                          
+
                           {% endfor %}
-                          
+
                           <hr style = "background-color:red">
-            
-                          
-              
+
+
+
                         </div >
                       </div>
                       {% endfor %}
@@ -265,7 +283,7 @@ hr{
 
 <script>
 
-    
+
 
 
 
@@ -289,7 +307,7 @@ hr{
       pageStyle.style.display = "none";
         pageStyle2.style.display = "";
     }
-      
+
 
 
     }

@@ -15,6 +15,7 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.TextField(max_length = 4000,verbose_name = "Yorum Ekle")
     createdDate = models.DateTimeField(auto_now_add = True,verbose_name = "Oluşturulma Tarihi")
+    userImage = models.ImageField(blank = True,null = True,verbose_name = "Resim Ekle/Add Picture")
     comments = []
     def __str__(self):
         return "Id: {} - Author: {} - Article : {} - Created Date: {} - Content : {}".format(self.id,self.author,self.article,self.createdDate,self.content)

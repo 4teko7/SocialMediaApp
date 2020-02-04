@@ -7,7 +7,8 @@ from django.contrib import messages
 from comment.commentForms import *
 from article.models import *
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
+from users.models import UserProfile
 # Create your views here.
 
 
@@ -60,10 +61,19 @@ def addCommentComment(req,id):
     from .commentLang import lang2
     form = CommentForm(req.POST)
     articleId = req.POST.get("articleId")
+    user = User.objects.get(username = req.user.username)
+    profile = UserProfile.objects.filter(user = user)
+
+    
     if(form.is_valid()):
         superComment = Comment.objects.get(id = id)
         content = form.cleaned_data.get("content")
-        superComment.comments.append({"author":req.user.username,"content":content,"id":int(id)}) 
+        con = {"author":req.user.username,"content":content,"id":int(id)}
+        if(profile):
+            if(profile[0].profileImage):
+                con = {"author":req.user.username,"content":content,"id":int(id),"userImage":profile[0].profileImage}
+
+        superComment.comments.append(con) 
         superComment.save()
         messages.success(req,lang2['commentAdded'])
         return HttpResponseRedirect("/articles/articledetail/" + articleId + "/")

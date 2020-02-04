@@ -9,6 +9,9 @@ from todo.models import Todo
 from comment.models import Comment
 from comment.commentForms import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from users.models import UserProfile
+
 contex = {}
 
 
@@ -90,10 +93,28 @@ def articleDetail(req,id):
     if(not article):
         return render(req,"warnings/pagenotfound.html",context)
     comments = Comment.objects.filter(article = article)
-    commets = comments.order_by('createdDate')
+    comments = comments.order_by('createdDate')
     comments = comments[::-1]
     context['article'] = article[0]
     context['commentForm'] = commentForm
+    for i in comments:
+        for a in i.comments:
+            print("A : ",a)
+            user = User.objects.get(username = a["author"])
+            profile = UserProfile.objects.filter(user = user)
+            if(profile):
+                if(profile[0].profileImage):
+                    a["userImage"] = profile[0].profileImage
+                else:
+                    a["userImage"] = None
+        user = User.objects.get(username = i.author)
+        profile = UserProfile.objects.filter(user = user)
+        if(profile):
+            if(profile[0].profileImage):
+                i.userImage = profile[0].profileImage
+            else:
+                i.userImage = None
+
     context['comments'] = comments
     if(article[0].articleImage):
         context["image"] = article[0].articleImage.url

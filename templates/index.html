@@ -23,7 +23,7 @@
 <br><br>
         <h2>{{lang.welcome}}, {% if request.user.is_authenticated %} {{ request.user.username }}  {% endif %}
                 <div class = "container col-lg-6 col-xs-12 col-md-6" align="middle" style = " margin : auto auto; display:inline;">
-                        <strong><img style = "witdh:6rem; height:6rem;"   src = "{{profileImage.url}}"></strong>
+                        <strong><img style = "witdh:6rem; height:6rem;"  class = "rounded-circle" src = "{{profileImage.url}}"></strong>
                         </div>
         </h2>
         <hr>
