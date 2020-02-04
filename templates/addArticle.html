@@ -17,18 +17,29 @@
         <h1>{{lang.addArticle}}</h1>
             <hr>
             <form action="/articles/addarticle/" method="POST" enctype="multipart/form-data">
-                
+
                 {% csrf_token %}
                 {{form.media}}
                 {{form|crispy}}
-                <button type="submit" class="btn btn-danger">{{lang.addArticle}}</button>
+                <button type="submit" class="btn btn-danger"  onclick = "upload()">{{lang.addArticle}}</button>
+                <scan id = "uploadProgress"></scan>
             </form>
         </div>
 
     </div>
 </div>
-<br>
-<br>
 
+<!--<input type="file" capture = "camera" accept="image/*,application/pdf">-->
+
+
+
+<br>
+<br>
+<script>
+    function upload(){
+        progress = document.getElementById("uploadProgress")
+        progress.innerHTML = "<div class='alert alert-primary' style = 'margin-top : 0.5rem;'>Please Wait...</div>"
+    }
+</script>
 {% endblock body %}
 

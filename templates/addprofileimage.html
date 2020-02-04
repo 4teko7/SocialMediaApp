@@ -21,17 +21,28 @@
             <hr>
 
             <form action="/users/addprofileimage/" method="POST" enctype="multipart/form-data">
-                
+
                 {% csrf_token %}
                 {{form.media}}
                 {{form|crispy}}
-                <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+                <button type="submit" class="btn btn-danger" onclick = "upload()">{{lang.save}}</button>
+                <scan id = "uploadProgress"></scan>
             </form>
+                    <div style="text-align: center; margin-top: 1rem; margin-bottom:2rem;" class = "pull-right">
+                <button type = "button" onclick="history.back()" class="btn btn-primary">{{lang.goBack}}</button>
+
+                </div>
         </div>
+
 
 </div>
 <br>
 <br>
-
+<script>
+    function upload(){
+        progress = document.getElementById("uploadProgress")
+        progress.innerHTML = "<div class='alert alert-primary' style = 'margin-top : 0.5rem;'>Please Wait...</div>"
+    }
+</script>
 {% endblock body %}
 
