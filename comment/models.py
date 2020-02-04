@@ -6,6 +6,7 @@ from article.models import Article
 from django.contrib.postgres.fields import ArrayField
 from .commentLang import commentLanguage
 from djangoBlog.language import *
+import json
 # Create your models here.
 
 class Comment(models.Model):
@@ -16,6 +17,7 @@ class Comment(models.Model):
     content = models.TextField(max_length = 4000,verbose_name = "Yorum Ekle")
     createdDate = models.DateTimeField(auto_now_add = True,verbose_name = "Oluşturulma Tarihi")
     userImage = models.ImageField(blank = True,null = True,verbose_name = "Resim Ekle/Add Picture")
-    comments = []
+    
+    comments2 = models.TextField(max_length = 4000,blank = True,null = True,verbose_name = "Yorum Ekle")
     def __str__(self):
         return "Id: {} - Author: {} - Article : {} - Created Date: {} - Content : {}".format(self.id,self.author,self.article,self.createdDate,self.content)

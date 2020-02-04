@@ -9,6 +9,7 @@ from article.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import UserProfile
+import json
 # Create your views here.
 
 
@@ -46,6 +47,7 @@ def addComment(req,id):
         form = CommentForm(req.POST)
         if(form.is_valid()):
             comment = form.save(commit = False)
+
             comment.author = req.user
             comment.article = Article.objects.filter(id = id)[0]
             articlee = comment.article
@@ -71,9 +73,17 @@ def addCommentComment(req,id):
         con = {"author":req.user.username,"content":content,"id":int(id)}
         if(profile):
             if(profile[0].profileImage):
-                con = {"author":req.user.username,"content":content,"id":int(id),"userImage":profile[0].profileImage}
+                con = {"author":req.user.username,"content":content,"id":int(id),"userImage":profile[0].profileImage.url}
 
-        superComment.comments.append(con) 
+        if(superComment.comments2):
+            com = json.loads(superComment.comments2)
+            com.append(con)
+        else:
+            com = []
+            com.append(con)
+
+        superComment.comments2 = json.dumps(com)
+        # print("SUPER COMMENT : ",superComment.comments2)
         superComment.save()
         messages.success(req,lang2['commentAdded'])
         return HttpResponseRedirect("/articles/articledetail/" + articleId + "/")

@@ -96,50 +96,53 @@ hr{
 </html>
 {% endwith %} {% endcomment %}
 
-          {% for comment in comments%}
-          <div class="media mb-4">
-            {% if comment.userImage %}
-            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment.userImage.url}}" alt="">
-            {% else %}
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            {% endif%}
-            <div  class="media-body" style = " word-wrap: break-word;">
-              <h5 class="mt-0">{{comment.author}}</h5>
-              <a href = "#commentForm{{comment.id}}"><button style = "font-size:0.8rem; display :inline;" name = "replyDiv{{comment.id}}" class = "btn btn-danger pull-right" onclick = "reply(this.name)">Reply</button></a>
+           {% for comment in comments %}
+           {% comment %} <p>{{comment.userImage.url}}</p> {% endcomment %}
+                      <div class="media mb-4">
+                            {% if comment.userImage %}
+                            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment.userImage}}" alt="">
+                            {% else %}
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            {% endif%}
+                        <div  class="media-body" style = " word-wrap: break-word;">
+                          <h5 class="mt-0">{{comment.author}}</h5>
+                          <a href = "#commentForm2{{comment.id}}"><button style = "font-size:0.8rem; display :inline;" name = "replyDiv2{{comment.id}}" class = "btn btn-danger pull-right" onclick = "reply(this.name)">Reply</button></a>
 
-              <div id = "commentForm{{comment.id}}">
-              {{comment.content}}
-            </div>
+                          <div id = "commentForm2{{comment.id}}">
+                          {{comment.content}}
+                        </div>
 
-              {% include "includes/replyComment.html" %}
+                          {% include "includes/replyComment2.html" %}
 
 
-              {% for comment2 in comment.comments %}
 
-              {% if comment2.id == comment.id %}
+              {% for com in comment.comments2 %}
+                  {% if com.id == comment.id%}
+
 
               <div class="media mt-4">
-                      {% if comment2.userImage %}
-                      <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment2.userImage.url}}" alt="asda">
+              
+                      {% if com.userImage %}
+                      <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{com.userImage}}" alt="">
                       {% else %}
                       <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                       {% endif%}
                 <div class="media-body" style = " word-wrap: break-word;">
-                  <h5 class="mt-0">{{comment2.author}}</h5>
-                  {{comment2.content}}
+                  <h5 class="mt-0">{{com.author}}</h5>
+                  {{com.content}}
                 </div>
               </div>
               {% endif %}
 
               {% endfor %}
 
-              <hr>
+                          <hr style = "background-color:red">
 
 
 
-            </div >
-          </div>
-          {% endfor %}
+                        </div >
+                      </div>
+                      {% endfor %}
 
 
 
@@ -228,11 +231,13 @@ hr{
 </div>
                                     <!-- END OF ADD COMMENT -->
 
-<div class="container" style = "margin-top:2rem;">
-                      {% for comment in comments%}
+          <div class="container" style = "margin-top:2rem;">
+          <p>COMMEN@Ts  :  {{comments}}</p>
+                     {% for comment in comments %}
+           {% comment %} <p>{{comment.userImage.url}}</p> {% endcomment %}
                       <div class="media mb-4">
                             {% if comment.userImage %}
-                            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment.userImage.url}}" alt="">
+                            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment.userImage}}" alt="">
                             {% else %}
                             <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                             {% endif%}
@@ -247,24 +252,26 @@ hr{
                           {% include "includes/replyComment2.html" %}
 
 
-                          {% for comment2 in comment.comments %}
 
-                          {% if comment2.id == comment.id %}
+              {% for com in comment.comments2 %}
+                  {% if com.id == comment.id%}
 
-                          <div class="media mt-4">
-                            {% if comment2.userImage %}
-                            <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{comment2.userImage.url}}" alt="asdsa">
-                            {% else %}
-                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                            {% endif%}
-                            <div class="media-body" style = " word-wrap: break-word;">
-                              <h5 class="mt-0">{{comment2.author}}</h5>
-                              {{comment2.content}}
-                            </div>
-                          </div>
-                          {% endif %}
 
-                          {% endfor %}
+              <div class="media mt-4">
+              
+                      {% if com.userImage %}
+                      <img class="d-flex mr-3 rounded-circle" style = "width:3rem;height:3rem;" src="{{com.userImage}}" alt="">
+                      {% else %}
+                      <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                      {% endif%}
+                <div class="media-body" style = " word-wrap: break-word;">
+                  <h5 class="mt-0">{{com.author}}</h5>
+                  {{com.content}}
+                </div>
+              </div>
+              {% endif %}
+
+              {% endfor %}
 
                           <hr style = "background-color:red">
 

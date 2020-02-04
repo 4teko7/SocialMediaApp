@@ -11,6 +11,7 @@ from comment.commentForms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import UserProfile
+import json
 
 contex = {}
 
@@ -86,10 +87,12 @@ def myArticles(req):
     return render(req,"myarticles.html",context)
 
 def articleDetail(req,id):
+    parsed = []
     global context
     commentForm = CommentForm()
     check(req)
     article = Article.objects.filter(id = id)
+    
     if(not article):
         return render(req,"warnings/pagenotfound.html",context)
     comments = Comment.objects.filter(article = article)
@@ -97,28 +100,36 @@ def articleDetail(req,id):
     comments = comments[::-1]
     context['article'] = article[0]
     context['commentForm'] = commentForm
-    for i in comments:
-        for a in i.comments:
-            print("A : ",a)
-            user = User.objects.get(username = a["author"])
-            profile = UserProfile.objects.filter(user = user)
-            if(profile):
-                if(profile[0].profileImage):
-                    a["userImage"] = profile[0].profileImage
-                else:
-                    a["userImage"] = None
-        user = User.objects.get(username = i.author)
+
+
+
+    for comment in comments:
+        if(comment.comments2):
+           
+            parsed = json.loads(comment.comments2)
+            for com in parsed:
+                user = User.objects.get(username = com["author"])
+                profile = UserProfile.objects.filter(user = user)
+                if(profile):
+                    if(profile[0].profileImage):
+                        com["userImage"] = profile[0].profileImage.url
+                    else:
+                        com["userImage"] = None
+                    comment.comments2 = parsed
+        user = User.objects.get(username = comment.author)
         profile = UserProfile.objects.filter(user = user)
         if(profile):
             if(profile[0].profileImage):
-                i.userImage = profile[0].profileImage
+                comment.userImage = profile[0].profileImage.url
             else:
-                i.userImage = None
+                comment.userImage = None
+
+
+       
 
     context['comments'] = comments
     if(article[0].articleImage):
         context["image"] = article[0].articleImage.url
-        print(context['image'])
     if(article[0].isPrivate):
         if(article[0].author == req.user):
             return render(req,"articledetail.html",context)
