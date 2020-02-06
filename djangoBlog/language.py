@@ -61,6 +61,8 @@ tr = {
     'firstandlastname':"İsim ve Soyisim",
     'pleaselogin':"Daha Fazla Özellik İçin Lütfen Giriş Yapınız.",
     "changeProfilFoto":"Profil Fotoğrafını Ekle/Değiştir",
+    "edit":"Düzenle",
+    "wait":"Lütfen Bekleyiniz Dosyanız Yükleniyor...",
 
 
 # MESSAGES
@@ -156,6 +158,9 @@ en = {
     'firstandlastname':"Full Name",
     'pleaselogin':"Please Login For More Features.",
     "changeProfilFoto":"Add or Remove Profil Photo",
+    "edit":"Edit",
+    "wait":"Please Wait...",
+
 
 
 
@@ -184,7 +189,7 @@ en = {
     'fullname':'Full Name',
     'formInvalid':"Form is Invalid",
     "noUser":"User Not Found",
-    
+
 }
 
 

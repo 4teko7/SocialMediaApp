@@ -67,7 +67,7 @@ def addCommentComment(req,id):
     user = User.objects.get(username = req.user.username)
     profile = UserProfile.objects.filter(user = user)
 
-    
+
     if(form.is_valid()):
         superComment = Comment.objects.get(id = id)
         content = form.cleaned_data.get("content")

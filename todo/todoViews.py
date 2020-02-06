@@ -65,8 +65,36 @@ def addTodo(req):
     else:
         return render(req,"addtodo.html",context)
 
+
+
+@login_required(login_url="/users/login/")
+def editTodo(req,id):
+    from .todoLang import lang2
+    todo = Todo.objects.get(id = id)
+    if(req.method == "POST"):
+        form = addTodoForm(req.POST)
+        if(form.is_valid()):
+            content = form.cleaned_data.get("content")
+            date = form.cleaned_data.get("date")
+            todo.content = content
+            todo.date = date
+            todo.save()
+            messages.success(req,lang2['todoAdded'])
+            return HttpResponseRedirect('/todos/mytodos/')
+        else:
+            return HttpResponseRedirect('/todos/mytodos/')
+    else:
+        return HttpResponseRedirect('/todos/mytodos/')
+
+
+
 @login_required(login_url="/users/login/")
 def myTodos(req):
+
+    form = addTodoForm()
+
+
+
     check(req)
     todos = Todo.objects.filter(author = req.user)
     todos = todos.order_by('date')
@@ -81,7 +109,7 @@ def myTodos(req):
 
     global context
     context['todos'] = todos
-
+    context['form'] = form
     context['date'] = datetime.datetime.now()
     return render(req,"mytodos.html",context)
 

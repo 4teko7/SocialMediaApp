@@ -92,7 +92,7 @@ def articleDetail(req,id):
     commentForm = CommentForm()
     check(req)
     article = Article.objects.filter(id = id)
-    
+    articleAuthor = User.objects.get(username = article[0].author)
     if(not article):
         return render(req,"warnings/pagenotfound.html",context)
     comments = Comment.objects.filter(article = article)
@@ -105,7 +105,7 @@ def articleDetail(req,id):
 
     for comment in comments:
         if(comment.comments2):
-           
+
             parsed = json.loads(comment.comments2)
             for com in parsed:
                 user = User.objects.get(username = com["author"])
@@ -125,8 +125,8 @@ def articleDetail(req,id):
                 comment.userImage = None
 
 
-       
 
+    context['articleAuthor'] = articleAuthor
     context['comments'] = comments
     if(article[0].articleImage):
         context["image"] = article[0].articleImage.url
@@ -162,17 +162,18 @@ def editArticle(req,id):
     context['form'] = form
     context['id'] = id
     if(req.method == "POST"):
-        
+
         form = addArticleForm(req.POST,req.FILES)
         if(form.is_valid()):
             articleOld[0].content = form.cleaned_data.get("content")
             articleOld[0].title = form.cleaned_data.get("title")
+            articleOld[0].isPrivate = form.cleaned_data.get("isPrivate")
             if(form.cleaned_data.get("articleImage")):
                 articleOld[0].articleImage = form.cleaned_data.get("articleImage")
             else:
                 if(req.POST.get("articleImage-clear")):
                     articleOld[0].articleImage = None
-                
+
             articleOld[0].save()
             messages.success(req,lang2['articleUpdated'])
             return HttpResponseRedirect("/articles/myarticles/")
@@ -202,4 +203,4 @@ def deleteArticle(req,id):
 
 
 
-    
+

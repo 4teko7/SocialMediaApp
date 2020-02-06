@@ -59,7 +59,7 @@ def registerUser(req):
     check(req)
     global context
     context['form'] = form
-    
+
     if(req.method == "POST"):
         print("POSTA GIRDI")
         form = registerForm(req.POST)
@@ -80,7 +80,7 @@ def registerUser(req):
     else:
         return render(req,"register.html",context)
 
-   
+
 def loginUser(req):
     from .userLang import lang2
 
@@ -93,7 +93,7 @@ def loginUser(req):
         if(form.is_valid()):
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
-            
+
             user = authenticate(username = username,password = password)
             if(user):
                 messages.success(req,lang2['loggedIn'])
@@ -169,7 +169,7 @@ def addProfileImage(req):
                             profile[0].profileImage = None
                             profile[0].save()
             # article.author = req.user
-            
+
             messages.success(req,lang2['articleAdded'])
             return HttpResponseRedirect("/users/about/")
         else:

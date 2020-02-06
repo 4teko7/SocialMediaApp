@@ -33,6 +33,9 @@ from users.models import UserProfile
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+
+
 context = {}
 allArticles = 0
 myTodos = 0
@@ -51,7 +54,7 @@ def check(req):
             "myArticles":myArticles
              }
     else:
-        allArticles = len(Article.objects.all())
+        allArticles = len(Article.objects.filter(isPrivate = False))
         context = {"allArticles":allArticles}
 
 
@@ -59,7 +62,7 @@ def allInfo(req):
     global allArticles
     global myTodos
     global myArticles
-    allArticles = len(Article.objects.all())
+    allArticles = len(Article.objects.filter(isPrivate = False))
     myTodos = len(Todo.objects.filter(author = req.user))
     myArticles = len(Article.objects.filter(author = req.user))
 
@@ -71,6 +74,7 @@ def mainPage(req):
 
     check(req)
     if(req.user.is_authenticated):
+
         articles = Article.objects.filter(author = req.user)
         articles = articles.order_by('id')
         articles = articles[::-1]
@@ -113,8 +117,8 @@ def searchUser(req):
     context['lang'] = lang
     if(keywords):
         users = User.objects.filter(username__contains = keywords)
+
         context['users'] = users
-        
     return render(req,'allusers.html',context)
 
 

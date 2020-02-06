@@ -7,6 +7,7 @@ urlpatterns = [
     url("mytodos/",myTodos,name = "mytodos"),
     url("completetodo/",completeTodo,name = "completetodo"),
     url("deletetodo/(?P<id>\d+)/",deleteTodo,name = "deletetodo"),
+    url("edittodo/(?P<id>\d+)/",editTodo,name = "editTodo"),
 
 
 ]
