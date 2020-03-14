@@ -29,11 +29,13 @@ from comment.commentLang import commentLanguage
 from .language import *
 import datetime
 from users.models import UserProfile
-
+import time
 from django.conf import settings
 from django.conf.urls.static import static
 
-
+from apscheduler.schedulers.background import BackgroundScheduler
+import smtplib
+import ssl
 
 
 context = {}
@@ -43,7 +45,9 @@ myArticles = 0
 lang = en
 
 
+
 def check(req):
+    
     global context
     global allArticles
     if(req.user.is_authenticated):
@@ -69,6 +73,7 @@ def allInfo(req):
 
 
 def mainPage(req):
+    start_job()
     global lang
     global context
 
@@ -149,3 +154,76 @@ urlpatterns = [
     url('^$',mainPage,name = "mainPage"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+
+
+scheduler = BackgroundScheduler()
+job = None
+
+def tick():
+    todos = Todo.objects.all()
+    todos = todos.order_by('date')
+    todos = list(filter(lambda x: not x.iscompleted, todos))
+    for todo in todos:
+        
+        year = str(time.localtime(time.time()).tm_year)
+        mon = str(time.localtime(time.time()).tm_mon)
+        day = time.localtime(time.time()).tm_mday
+        
+        if(len(mon) < 2):
+            mon = '0' + mon
+
+        todoYear = str(todo.date)[0:4]
+        todoMon = str(todo.date)[5:7]
+        todoDay = str(todo.date)[8:11]
+        print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
+        print("{} : {} : {}".format(year,mon,day))
+        if(todoYear == year and todoMon == mon):
+            if(todoDay == "31"):
+                if(day == 1):
+                    #Send Email
+                    if(not todo.isEmailSent):
+                        sendEmail(todo)
+            elif(int(todoDay)+1 == day):
+                    #SEND EMAIL
+                print(not todo.isEmailSent)
+                if(not todo.isEmailSent):
+                    print("BURAYA GELDI")
+                    sendEmail(todo)    
+                
+                    
+        print("Time to : ",todo.content)
+        
+
+def start_job():
+    global job
+    job = scheduler.add_job(tick,'interval', seconds=4)
+    try:
+        scheduler.start()
+    except:
+        pass
+
+
+def sendEmail(todo):
+    port = settings.EMAIL_PORT
+    smtp_server = settings.EMAIL_HOST
+    sender_email = settings.EMAIL_HOST_USER
+    password = settings.EMAIL_HOST_PASSWORD
+    receiver_email = todo.author.email
+    subject = "Bugun Yapman Gerekenler !"
+    body = todo.content
+    message = 'Subject: {}\n\n{}'.format(subject, body)
+    context = ssl.create_default_context()
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, password)
+        try:
+            server.sendmail(sender_email, receiver_email, message)
+            todo.isEmailSent = True
+            todo.save()
+        except:
+            pass

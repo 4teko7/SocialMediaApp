@@ -27,6 +27,7 @@ def allInfo(req):
 # "allArticles":allArticles,"myTodos":myTodos,"myArticles":myArticles
 
 def check(req):
+    
     from .userLang import lang2
     global allArticles
     global context

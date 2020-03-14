@@ -4,3 +4,4 @@ django-cleanup
 django-crispy-forms
 django-js-asset
 Pillow==6.1.0
+APScheduler==3.6.3

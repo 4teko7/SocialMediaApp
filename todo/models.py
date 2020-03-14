@@ -10,5 +10,6 @@ class Todo(models.Model):
     content = models.TextField(verbose_name = "Content")
     date = models.DateTimeField(verbose_name = "Time",default='')
     iscompleted = models.BooleanField(verbose_name = "Is Completed",default=False)
+    isEmailSent = models.BooleanField(verbose_name = "Is Email Sent",default=False)
     def __str__(self):
         return "Author: {} - Created Date: {}".format(self.author,self.date)

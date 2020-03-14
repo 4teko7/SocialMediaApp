@@ -99,7 +99,8 @@ def myTodos(req):
     todos = Todo.objects.filter(author = req.user)
     todos = todos.order_by('date')
     todos = list(filter(lambda x: not x.iscompleted, todos))
-
+    for todo in todos:
+        print(todo.date)
 
     todosCompleted = Todo.objects.filter(author = req.user)
     todosCompleted = todosCompleted.order_by('date')
