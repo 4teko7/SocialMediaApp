@@ -4,7 +4,7 @@
 "name": "SOCIAL BLOG",
 "icons": [
     {
-    "src": "/media/tic.png",
+    "src": "/staticfiles/tic.png",
     "type": "image/png",
     "sizes": "512x512"
     }
