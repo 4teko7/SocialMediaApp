@@ -14,14 +14,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='todo',
-            name='createdDate',
-        ),
-        migrations.AddField(
-            model_name='todo',
-            name='title',
-        ),
+        
         migrations.AddField(
             model_name='todo',
             name='date',
