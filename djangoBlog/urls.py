@@ -47,7 +47,7 @@ lang = en
 
 
 def check(req):
-    
+
     global context
     global allArticles
     if(req.user.is_authenticated):
@@ -167,19 +167,19 @@ def tick():
     todos = todos.order_by('date')
     todos = list(filter(lambda x: not x.iscompleted, todos))
     for todo in todos:
-        
+
         year = str(time.localtime(time.time()).tm_year)
         mon = str(time.localtime(time.time()).tm_mon)
         day = time.localtime(time.time()).tm_mday
-        
+
         if(len(mon) < 2):
             mon = '0' + mon
 
         todoYear = str(todo.date)[0:4]
         todoMon = str(todo.date)[5:7]
         todoDay = str(todo.date)[8:11]
-        print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
-        print("{} : {} : {}".format(year,mon,day))
+        # print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
+        # print("{} : {} : {}".format(year,mon,day))
         if(todoYear == year and todoMon == mon):
             if(todoDay == "31"):
                 if(day == 1):
@@ -188,14 +188,14 @@ def tick():
                         sendEmail(todo)
             elif(int(todoDay)+1 == day):
                     #SEND EMAIL
-                print(not todo.isEmailSent)
+                # print(not todo.isEmailSent)
                 if(not todo.isEmailSent):
-                    print("BURAYA GELDI")
-                    sendEmail(todo)    
-                
-                    
-        print("Time to : ",todo.content)
-        
+                    # print("BURAYA GELDI")
+                    sendEmail(todo)
+
+
+        # print("Time to : ",todo.content)
+
 
 def start_job():
     global job
@@ -223,6 +223,7 @@ def sendEmail(todo):
         server.login(sender_email, password)
         try:
             server.sendmail(sender_email, receiver_email, message)
+            print("EMAIL GONDERILDI")
             todo.isEmailSent = True
             todo.save()
         except:

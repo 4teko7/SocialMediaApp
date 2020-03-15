@@ -121,8 +121,12 @@ def completeTodo(req):
     id = req.POST.get('id')
     todo = Todo.objects.filter(id = id,author = req.user)
     if(todo):
-        if(todo[0].iscompleted): todo[0].iscompleted = False
-        else: todo[0].iscompleted = True
+        if(todo[0].iscompleted): 
+            todo[0].iscompleted = False
+            todo[0].isEmailSent = False
+        else: 
+            todo[0].iscompleted = True
+            todo[0].isEmailSent = True
         todo[0].save()
         messages.success(req,lang2['todoCompleted'])
     return HttpResponseRedirect('/todos/mytodos/')
