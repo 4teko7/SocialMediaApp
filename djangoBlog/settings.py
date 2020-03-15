@@ -24,8 +24,8 @@ DEFAULT_CHARSET = 'utf-8'
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')!h^pv*2g@i57r9i-pb*#_h3rzi)twqi@z%(!wtpo9u4#xsb4!'
-
+# SECRET_KEY = ')!h^pv*2g@i57r9i-pb*#_h3rzi)twqi@z%(!wtpo9u4#xsb4!'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -155,6 +155,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'frommytodos@gmail.com'
-EMAIL_HOST_PASSWORD = '+socialtodo-.'
+EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 EMAIL_PORT = 587
