@@ -14,6 +14,8 @@ class userAdmin(admin.ModelAdmin):
     # # list_display_links = []
     # # search_fields = []
     # # list_filter = []
+
+
     
     class Meta:
         model = UserProfile

@@ -3,7 +3,7 @@
 "name": "SOCIAL BLOG",
 "icons": [
     {
-    "src": "/staticfiles/tic.png",
+    "src": "/static/tic.png",
     "type": "image/png",
     "sizes": "512x512"
     }
