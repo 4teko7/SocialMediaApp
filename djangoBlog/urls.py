@@ -199,7 +199,7 @@ def tick():
 
 def start_job():
     global job
-    job = scheduler.add_job(tick,'interval', seconds=4)
+    job = scheduler.add_job(tick,'interval', seconds=600)
     try:
         scheduler.start()
     except:
