@@ -2,11 +2,30 @@
 {% load crispy_forms_tags %}
 {% block body %}
 <style>
+
+
+
 #id_profileImage{
 
 
-    background-color: cornflowerblue;
-    height:3rem;
+background-color: cornflowerblue;
+height:3rem;
+z-index: 3;
+color: red;
+/* display:none; */
+
+}
+
+#id_profileImage2{
+
+
+background-color: cornflowerblue;
+height:3rem;
+z-index: 3;
+color: red;
+text-align: center;
+align-content: center;
+
 }
 
 </style>
@@ -25,6 +44,18 @@
                 {% csrf_token %}
                 {{form.media}}
                 {{form|crispy}}
+                <div class="input-group">
+                    <div class="custom-file">
+                      <!-- <input type="file" class="" id="inputGroupFile04"> -->
+                      <input type="file" name="profileImage" color="yellow" class="custom-file-input" id="id_profileImage2" height="10rem" placeholder="CHOOSE FILE/RESIM SEÇ">
+                    </div>
+            
+                      <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                    </div><br>
+
+
+
+
                 <button type="submit" class="btn btn-danger" onclick = "upload()">{{lang.save}}</button>
                 <scan id = "uploadProgress"></scan>
             </form>
