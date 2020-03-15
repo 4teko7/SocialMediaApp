@@ -8,7 +8,7 @@ class Todo(models.Model):
     id = models.AutoField(primary_key=True)
     author = models.ForeignKey("auth.User",on_delete = models.CASCADE,verbose_name = "Author")
     content = models.TextField(verbose_name = "Content")
-    date = models.DateTimeField(verbose_name = "Time",default='')
+    date = models.DateTimeField(verbose_name = "Time")
     iscompleted = models.BooleanField(verbose_name = "Is Completed",default=False)
     isEmailSent = models.BooleanField(verbose_name = "Is Email Sent",default=False)
     def __str__(self):
