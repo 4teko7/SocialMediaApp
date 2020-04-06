@@ -240,7 +240,7 @@ def sendEmail(todo):
 
         except:
             print("EMAIL ATARKEN HATA ALDI")
-        # finally:
-            # print("QUIT FROM SERVER *****************************************************")
-            # server.quit()
+        finally:
+            print("QUIT FROM SERVER *****************************************************")
+            server.quit()
            
