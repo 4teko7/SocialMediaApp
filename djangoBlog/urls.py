@@ -233,6 +233,9 @@ def sendEmail(todo):
             todo.isEmailSent = True
             # print("EMAIL ATTI @@@@@@@@@@@@@@@@@@@@@@@")
             todo.save()
+
         except:
             print("EMAIL ATARKEN HATA ALDI")
+        finally:
+        	server.quit()
            
