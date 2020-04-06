@@ -163,6 +163,7 @@ scheduler = BackgroundScheduler()
 job = None
 
 def tick():
+    print("IT CHECKS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     todos = Todo.objects.all()
     todos = todos.order_by('date')
     todos = list(filter(lambda x: not x.iscompleted, todos))
@@ -178,8 +179,9 @@ def tick():
         todoYear = str(todo.date)[0:4]
         todoMon = str(todo.date)[5:7]
         todoDay = str(todo.date)[8:11]
-        # print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
-        # print("{} : {} : {}".format(year,mon,day))
+        print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
+        print("{} : {} : {}".format(year,mon,day))
+        print()
         if(todoYear == year and todoMon == mon):
             if(todoDay == "31"):
                 if(day == 1):
@@ -201,7 +203,7 @@ def start_job():
     global isJobStarted
     if(not isJobStarted):
         global job
-        job = scheduler.add_job(tick,'interval', seconds=4)
+        job = scheduler.add_job(tick,'interval', seconds=60)
         try:
             isJobStarted = True;
             scheduler.start()
@@ -220,10 +222,12 @@ def sendEmail(todo):
     body = todo.content
     message = 'Subject: {}\n\n{}'.format(subject, body)
     context = ssl.create_default_context()
+    print("IT IS HERE !")
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
         server.starttls(context=context)
         server.ehlo()  # Can be omitted
+        print("IT IS HERE ! @@@@@@@@@@@")
         server.login(sender_email, password)
         # print("INN SEND EMAIL METHOD BEFORE MESSAGING")
         try:
@@ -231,11 +235,12 @@ def sendEmail(todo):
             server.sendmail(sender_email, receiver_email, message)
             print("EMAIL GONDERILDI")
             todo.isEmailSent = True
-            # print("EMAIL ATTI @@@@@@@@@@@@@@@@@@@@@@@")
+            print("EMAIL ATTI @@@@@@@@@@@@@@@@@@@@@@@")
             todo.save()
 
         except:
             print("EMAIL ATARKEN HATA ALDI")
         finally:
-        	server.quit()
+            print("QUIT FROM SERVER *****************************************************")
+            server.quit()
            

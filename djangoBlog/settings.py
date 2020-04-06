@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_cleanup',
     'ckeditor',
+    'django_smtp_ssl',
 ]
 
 MIDDLEWARE = [
