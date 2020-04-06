@@ -179,9 +179,9 @@ def tick():
         todoYear = str(todo.date)[0:4]
         todoMon = str(todo.date)[5:7]
         todoDay = str(todo.date)[8:11]
-        print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
-        print("{} : {} : {}".format(year,mon,day))
-        print()
+        # print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
+        # print("{} : {} : {}".format(year,mon,day))
+        # print()
         if(todoYear == year and todoMon == mon):
             if(todoDay == "31"):
                 if(day == 1):
@@ -205,7 +205,7 @@ def start_job():
         global job
         job = scheduler.add_job(tick,'interval', seconds=60)
         try:
-            isJobStarted = True;
+            isJobStarted = True
             scheduler.start()
         except:
             pass
@@ -222,7 +222,7 @@ def sendEmail(todo):
     body = todo.content
     message = 'Subject: {}\n\n{}'.format(subject, body)
     context = ssl.create_default_context()
-    print("IT IS HERE !")
+    # print("IT IS HERE !")
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
         server.starttls(context=context)
@@ -235,12 +235,12 @@ def sendEmail(todo):
             server.sendmail(sender_email, receiver_email, message)
             print("EMAIL GONDERILDI")
             todo.isEmailSent = True
-            print("EMAIL ATTI @@@@@@@@@@@@@@@@@@@@@@@")
+            # print("EMAIL ATTI @@@@@@@@@@@@@@@@@@@@@@@")
             todo.save()
 
         except:
             print("EMAIL ATARKEN HATA ALDI")
-        finally:
-            print("QUIT FROM SERVER *****************************************************")
-            server.quit()
+        # finally:
+            # print("QUIT FROM SERVER *****************************************************")
+            # server.quit()
            
