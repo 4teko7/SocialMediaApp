@@ -36,7 +36,9 @@ from django.conf.urls.static import static
 from apscheduler.schedulers.background import BackgroundScheduler
 import smtplib
 import ssl
-
+from django.template import loader
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 context = {}
 allArticles = 0
@@ -202,8 +204,9 @@ def tick():
 def start_job():
     global isJobStarted
     if(not isJobStarted):
+        print("IT WILL START JOB")
         global job
-        job = scheduler.add_job(tick,'interval', seconds=10)
+        job = scheduler.add_job(tick,'interval', seconds=5)
         try:
             isJobStarted = True
             scheduler.start()
@@ -219,20 +222,51 @@ def sendEmail(todo):
     password = settings.EMAIL_HOST_PASSWORD
     receiver_email = todo.author.email
     subject = "Bugun Yapman Gerekenler !"
-    body = todo.content
-    message = 'Subject: {}\n\n{}'.format(subject, body)
+
+
+    # body = todo.content
+    # message2 = 'Subject: {}\n\n{}'.format(subject, body)
     context = ssl.create_default_context()
+    email_content = loader.render_to_string(
+            'message.html',
+            {
+                'Content-Type': 'text/html; charset=utf-8',
+                'Content-Disposition': 'inline',
+                'Content-Transfer-Encoding': '8bit',
+                'date': datetime.datetime.now().strftime('%a, %d %b %Y  %H:%M:%S %Z'),
+                'X-Mailer': 'python',
+                'subject': subject,
+                'todo':  todo.content,
+                    }
+        )
+    
+
+    MESSAGE = MIMEMultipart('alternative')
+    MESSAGE['subject'] = subject
+    MESSAGE['To'] = receiver_email
+    MESSAGE['From'] = sender_email
+    MESSAGE.preamble = """
+Your mail reader does not support the report format.
+Please visit us <a href="https://socialtodos.herokuapp.com/">online</a>!"""
+ 
+    HTML_BODY = MIMEText(email_content, 'html')
+ 
+    MESSAGE.attach(HTML_BODY)
+
+
+
+
     # print("IT IS HERE !")
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
         server.starttls(context=context)
         server.ehlo()  # Can be omitted
-        print("IT IS HERE ! @@@@@@@@@@@")
+        # print("IT IS HERE ! @@@@@@@@@@@")
         server.login(sender_email, password)
         # print("INN SEND EMAIL METHOD BEFORE MESSAGING")
         try:
-        	
-            server.sendmail(sender_email, receiver_email, message)
+        	# html_message=message,
+            server.sendmail(sender_email, receiver_email, MESSAGE.as_string())
             print("EMAIL GONDERILDI")
             todo.isEmailSent = True
             # print("EMAIL ATTI @@@@@@@@@@@@@@@@@@@@@@@")
