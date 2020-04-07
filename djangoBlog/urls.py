@@ -236,7 +236,7 @@ def sendEmail(todo):
                 'Content-Transfer-Encoding': '8bit',
                 'date': datetime.datetime.now().strftime('%a, %d %b %Y  %H:%M:%S %Z'),
                 'X-Mailer': 'python',
-                'subject': subject,
+                'subject': "Sayın {}, Todo Bilgileriniz : ".format(todo.author),
                 'todo':  todo.content,
                     }
         )
