@@ -206,7 +206,7 @@ def start_job():
     if(not isJobStarted):
         print("IT WILL START JOB")
         global job
-        job = scheduler.add_job(tick,'interval', seconds=5)
+        job = scheduler.add_job(tick,'interval', seconds=120)
         try:
             isJobStarted = True
             scheduler.start()
