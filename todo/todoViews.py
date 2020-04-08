@@ -55,7 +55,7 @@ def addTodo(req):
         form = addTodoForm(req.POST)
         if(form.is_valid()):
             content = form.cleaned_data.get("content")
-            date = form.cleaned_data.get("date")
+            date = req.POST.get("date")
             newTodo = Todo(content = content , date = date,author = req.user)
             newTodo.save()
             messages.success(req,lang2['todoAdded'])
@@ -75,7 +75,7 @@ def editTodo(req,id):
         form = addTodoForm(req.POST)
         if(form.is_valid()):
             content = form.cleaned_data.get("content")
-            date = form.cleaned_data.get("date")
+            date = req.POST.get("date")
             todo.content = content
             todo.date = date
             todo.save()
