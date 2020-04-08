@@ -73,7 +73,8 @@
                                     {% csrf_token %}
 
                                     {{form|crispy}}
-                                    <button type="submit" class="btn btn-danger">{{lang.save}}</button>
+                                    <label for="date" style = "margin:0 1rem 0 0">{{lang.date}} :</label><input type="date" name = "date" style = "background-color: aquamarine; border-radius: 1rem;z-index: 1rem; box-shadow: 1px 1px 1px 1px; box-shadow: aqua;">
+                                    <br><br><button type="submit" class="btn btn-danger">{{lang.save}}</button>
                                 </form>
 
 
