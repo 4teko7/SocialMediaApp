@@ -174,7 +174,7 @@ def tick():
         year = str(time.localtime(time.time()).tm_year)
         mon = str(time.localtime(time.time()).tm_mon)
         day = time.localtime(time.time()).tm_mday
-
+        hour = time.localtime(time.time()).tm_hour
         if(len(mon) < 2):
             mon = '0' + mon
 
@@ -185,17 +185,22 @@ def tick():
         # print("{} : {} : {}".format(year,mon,day))
         # print()
         if(todoYear == year and todoMon == mon):
-            if(todoDay == "31"):
-                if(day == 1):
-                    #Send Email
+
+            tempHours = todo.date[len(date)-5:len(date)]
+            tempHour = hours[0:2]
+            intTempHour = int(hour)
+            if(intTempHour == hour - 1):
+                if(todoDay == "31"):
+                    if(day == 1):
+                        #Send Email
+                        if(not todo.isEmailSent):
+                                sendEmail(todo)
+                elif(int(todoDay)+1 == day):
+                        #SEND EMAIL
+                    # print(not todo.isEmailSent)
                     if(not todo.isEmailSent):
+                        # print("BURAYA GELDI")
                         sendEmail(todo)
-            elif(int(todoDay)+1 == day):
-                    #SEND EMAIL
-                # print(not todo.isEmailSent)
-                if(not todo.isEmailSent):
-                    # print("BURAYA GELDI")
-                    sendEmail(todo)
 
 
         # print("Time to : ",todo.content)
@@ -206,7 +211,7 @@ def start_job():
     if(not isJobStarted):
         print("IT WILL START JOB")
         global job
-        job = scheduler.add_job(tick,'interval', seconds=120)
+        job = scheduler.add_job(tick,'interval', seconds=1200)
         try:
             isJobStarted = True
             scheduler.start()
@@ -236,7 +241,7 @@ def sendEmail(todo):
                 'Content-Transfer-Encoding': '8bit',
                 'date': datetime.datetime.now().strftime('%a, %d %b %Y  %H:%M:%S %Z'),
                 'X-Mailer': 'python',
-                'subject': "Sayın {}, Todo Bilgileriniz : ".format(todo.author),
+                'subject': "Sayın {}, Görevinizi Yapmanız İçin Yaklaşık 1 saatiniz Kaldı. Todo Bilgileriniz : ".format(todo.author),
                 'todo':  todo.content,
                     }
         )

@@ -1,7 +1,28 @@
 {% extends 'layout.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
+<style>
 
+body {
+    font: 1.2em/1.3 sans-serif;
+    color: #222;
+    font-weight: 400;
+    padding: 5px;
+    margin: 0;
+    background: linear-gradient(#efefef, #999) fixed;
+  }
+  input {
+    padding: 5px 0;
+    font-size: 1.5em;
+    font-family: inherit;
+    width: 100px;
+  }
+
+  </style>
 {% block body %}
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src = "{% static 'js/jquery-timepicker.js' %}"></script>
+<script src = "{% static 'js/timePicker.js' %}"></script>
 
 <div class="container">
     <div class="row">
@@ -12,10 +33,23 @@
             <form action="/todos/addtodo/" method="POST">
                 {% csrf_token %}
                 {{form|crispy}}
-                
                 <label for="date" style = "margin:0 1rem 0 0">{{lang.date}} :</label><input type="date" name = "date" style = "background-color: aquamarine; border-radius: 1rem;z-index: 1rem; box-shadow: 1px 1px 1px 1px; box-shadow: aqua;">
+                <br><label for="date" style = "margin:0 1rem 0 0">{{lang.hour}} :</label><input type="text" class="time-picker form-control" id = "timePicker" value="Select Time"  placeholder="Select Time" name = "time" style = "background-color: aquamarine; border-radius: 1rem;z-index: 1rem; box-shadow: 1px 1px 1px 1px; box-shadow: aqua;" readonly>
                 <br><br><button type="submit" class="btn btn-danger">{{lang.addTodo}}</button>
             </form>
+
+            <script>
+                jQuery(document).ready(function($){
+                    $('#timePicker').hunterTimePicker({
+              callback: function($){
+                alert($.val());
+              }
+                });
+                $('.time-picker').hunterTimePicker();
+        
+                });
+        </script>
+
         </div>
 
     </div>

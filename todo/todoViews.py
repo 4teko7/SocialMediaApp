@@ -7,6 +7,8 @@ from django.contrib import messages
 from .models import Todo
 from article.models import Article
 from django.contrib.auth.decorators import login_required
+import datetime
+import time
 
 # Create your views here.
 
@@ -55,8 +57,10 @@ def addTodo(req):
         form = addTodoForm(req.POST)
         if(form.is_valid()):
             content = form.cleaned_data.get("content")
-            date = req.POST.get("date")
-            newTodo = Todo(content = content , date = date,author = req.user)
+            date = req.POST.get("date") + " " + req.POST.get("time")
+            temp = date[len(date)-5:len(date)]
+            print("DATE : " , time.localtime(time.time()).tm_hour)
+            newTodo = Todo(content = content , date = date, author = req.user)
             newTodo.save()
             messages.success(req,lang2['todoAdded'])
             return HttpResponseRedirect('/todos/mytodos/')
@@ -75,7 +79,7 @@ def editTodo(req,id):
         form = addTodoForm(req.POST)
         if(form.is_valid()):
             content = form.cleaned_data.get("content")
-            date = req.POST.get("date")
+            date = req.POST.get("date") + " " + req.POST.get("time")
             todo.content = content
             todo.date = date
             todo.save()
