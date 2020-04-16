@@ -181,26 +181,26 @@ def tick():
         todoYear = str(todo.date)[0:4]
         todoMon = str(todo.date)[5:7]
         todoDay = str(todo.date)[8:11]
-        # print("{} : {} : {}".format(todoYear,todoMon,int(todoDay)+1))
-        # print("{} : {} : {}".format(year,mon,day))
-        # print()
-        if(todoYear == year and todoMon == mon):
+        todoHour = (int(str(todo.date)[len(str(todo.date))-14:len(str(todo.date))-12]) + 3) % 24
+        todoMin = (int(str(todo.date)[len(str(todo.date))-11:len(str(todo.date))-9]))
+        # print("todo.date : ",todo.date)
+        # print("todoHour : ",todoHour)
+        # print("todoMin : ",todoMin)
+        # datt = "{}/{}/{}  :  {}:{}".format(todoDay,todoMon,todoYear,todoHour,todoMin)
+        # print(datt)
 
-            tempHours = todo.date[len(date)-5:len(date)]
-            tempHour = hours[0:2]
-            intTempHour = int(hour)
-            if(intTempHour == hour - 1):
+        if(todoYear == year and todoMon == mon):
+            if(todoHour == (hour - 1) % 24):
+                datt = "{}/{}/{}  :  {}:{}".format(todoDay,todoMon,todoYear,todoHour,todoMin)
                 if(todoDay == "31"):
                     if(day == 1):
                         #Send Email
                         if(not todo.isEmailSent):
-                                sendEmail(todo)
-                elif(int(todoDay)+1 == day):
+                                sendEmail(todo,datt)
+                elif(int(todoDay) == day):
                         #SEND EMAIL
-                    # print(not todo.isEmailSent)
                     if(not todo.isEmailSent):
-                        # print("BURAYA GELDI")
-                        sendEmail(todo)
+                        sendEmail(todo,datt)
 
 
         # print("Time to : ",todo.content)
@@ -211,7 +211,7 @@ def start_job():
     if(not isJobStarted):
         print("IT WILL START JOB")
         global job
-        job = scheduler.add_job(tick,'interval', seconds=1200)
+        job = scheduler.add_job(tick,'interval', seconds=600)
         try:
             isJobStarted = True
             scheduler.start()
@@ -220,15 +220,14 @@ def start_job():
 
 
 
-def sendEmail(todo):
-	
+def sendEmail(todo,datt):
     port = settings.EMAIL_PORT
     smtp_server = settings.EMAIL_HOST
     sender_email = settings.EMAIL_HOST_USER
     password = settings.EMAIL_HOST_PASSWORD
     receiver_email = todo.author.email
     subject = "Bugun Yapman Gerekenler !"
-
+	
 
     # body = todo.content
     # message2 = 'Subject: {}\n\n{}'.format(subject, body)
@@ -243,6 +242,7 @@ def sendEmail(todo):
                 'X-Mailer': 'python',
                 'subject': "Sayın {}, Görevinizi Yapmanız İçin Yaklaşık 1 saatiniz Kaldı. Todo Bilgileriniz : ".format(todo.author),
                 'todo':  todo.content,
+                'todoDate':datt,
                     }
         )
     
@@ -264,6 +264,7 @@ Please visit us <a href="https://socialtodos.herokuapp.com/">online</a>!"""
 
     # print("IT IS HERE !")
     with smtplib.SMTP(smtp_server, port) as server:
+        print("COME TO SEND EMAIL")
         server.ehlo()  # Can be omitted
         server.starttls(context=context)
         server.ehlo()  # Can be omitted
