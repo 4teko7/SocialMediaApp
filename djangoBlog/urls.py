@@ -190,7 +190,7 @@ def tick():
         # print(datt)
 
         if(todoYear == year and todoMon == mon):
-            if(todoHour == (hour - 1) % 24):
+            if((todoHour -1) % 24 == hour % 24):
                 datt = "{}/{}/{}  :  {}:{}".format(todoDay,todoMon,todoYear,todoHour,todoMin)
                 if(todoDay == "31"):
                     if(day == 1):
@@ -204,7 +204,6 @@ def tick():
 
 
         # print("Time to : ",todo.content)
-
 
 def start_job():
     global isJobStarted
