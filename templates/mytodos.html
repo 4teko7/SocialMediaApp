@@ -52,10 +52,9 @@
 
 
                 {% if todo.iscompleted %}
-
                 <img class=" pull-right" style="width:3rem; height:3rem; ;" src={% static 'img/icon-yes.svg' %}>
                 {% else %}
-
+                
                 <img class=" pull-right" style="width:3rem; height:3rem;;" src={% static 'img/icon-no.svg' %}>
 
                 {% endif %}
@@ -67,28 +66,38 @@
                     {% csrf_token %}
                     <input type="hidden" name="id" value={{todo.id}}>
                     {% if not todo.iscompleted %}
+                    
                     <button type="submit" class="btn btn-success pull-right"
-                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">{{lang.complete}}</button>
+                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5.4rem;">{{lang.complete}}</button>
                     {% else %}
 
 
                     <button type="submit" class="btn btn-warning pull-right"
-                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5rem;">{{lang.undo}}</button>
+                        style="color:white; margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5.4rem;">{{lang.undo}}</button>
 
 
                     {% endif %}
+
+
+                    
                 </form>
+                
                 {% if todo.iscompleted %}
 
                 <form action="/todos/deletetodo/{{todo.id}}/" method="POST">
                         {% csrf_token %}
                     <button type="submit" class="btn btn-danger pull-right"
-                        style="color:white; margin-top:1rem; margin-right:0.3rem;font-size:0.7rem; font-weight:bolder; width:5rem;">{{lang.delete}}</button>
+                        style="color:white; margin-top:1rem; margin-right:0.3rem;font-size:0.7rem; font-weight:bolder; width:5.4rem;">{{lang.delete}}</button>
                 </form>
                 {% endif %}
+                
                 <button type="submit"  onclick = "editTodo('{{todo.id}}','{{todo.content}}','{{todo.date}}')" class="btn btn-info pull-right"
-                        style="color:white; margin-top:1rem; margin-right:0.3rem;font-size:0.7rem; font-weight:bolder; width:5rem; ">{{lang.edit}}</button>
+                        style="color:white; margin-top:1rem; margin-right:0.3rem;font-size:0.7rem; font-weight:bolder; width:5.4rem; ">{{lang.edit}}</button>
+                        
+            
                         <br><br>
+
+
                         <div class="col " id = "editTodoForm{{todo.id}}" style = "display:none;  text-align:center; z-index:10px; margin: auto auto;">
 
                             <h1>{{lang.addTodo}}</h1>
@@ -99,15 +108,27 @@
 
                                     {{form|crispy}}
                                     <label for="date" style = "margin:0 1rem 0 0">{{lang.date}} :</label><input type="date" name = "date" style = "background-color: aquamarine; border-radius: 1rem;z-index: 1rem; box-shadow: 1px 1px 1px 1px; box-shadow: aqua;">
-                                    <br><label for="date" style = "margin:0 1rem 0 0">{{lang.hour}} :</label><input type="text" class="time-picker{{todo.id}} form-control" id = "timePicker{{todo.id}}" value="{{todo.date}}"  placeholder="Select Time" name = "time" style = "background-color: aquamarine; border-radius: 1rem;z-index: 1rem; box-shadow: 1px 1px 1px 1px; box-shadow: aqua;" readonly>
+                                    <br><label for="date" style = "margin:0 1rem 0 0"></label><input type="text" class="time-picker{{todo.id}} form-control" id = "timePicker{{todo.id}}" value="{{todo.date}}"  placeholder="Select Time" name = "time" style = "background-color: aquamarine; border-radius: 1rem;z-index: 1rem; box-shadow: 1px 1px 1px 1px; box-shadow: aqua;" readonly>
                                     <br><br><button type="submit" class="btn btn-danger">{{lang.save}}</button>
                                 </form>
 
 
 
                             </div>
+                
+                            <form action="/todos/addoneday/{{todo.id}}/" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-dark pull-right"
+                                    style="color:white;right:1rem; margin-left:0.3rem; margin-top:1rem;font-size:0.7rem; font-weight:bolder; width:5.4rem;">{{lang.oneDay}}</button>
+                            </form>
+                            <form action="/todos/addonehour/{{todo.id}}/" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-dark pull-right"
+                                    style="color:white;right:1rem;  margin-left:1rem;  margin-top:1rem; font-size:0.7rem; font-weight:bolder; width:5.4rem;">{{lang.oneHour}}</button>
+                            </form>
 
             </div>
+            
 
         </div>
 
@@ -143,10 +164,6 @@
                 formContent = document.getElementById("EditTodoTextAreaId" + id);
                 editTodoForm.children[2][1].value = content;
             }
-            console.log(`Merhaba${id}`);
-
-            
-
         
         }
 

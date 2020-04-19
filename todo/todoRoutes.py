@@ -8,6 +8,9 @@ urlpatterns = [
     url("completetodo/",completeTodo,name = "completetodo"),
     url("deletetodo/(?P<id>\d+)/",deleteTodo,name = "deletetodo"),
     url("edittodo/(?P<id>\d+)/",editTodo,name = "editTodo"),
+    url("addoneday/(?P<id>\d+)/",addOneDay,name = "addOneDay"),
+    url("addonehour/(?P<id>\d+)/",addOneHour,name = "addOneHour"),
+
 
 
 ]

@@ -17,7 +17,7 @@ Including another URLconf
 """
 from __future__ import unicode_literals
 from django.conf.urls import url,include
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,HttpResponse,redirect,HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import admin
 from article.models import Article
@@ -75,7 +75,6 @@ def allInfo(req):
 
 
 def mainPage(req):
-    start_job()
     global lang
     global context
 
@@ -144,8 +143,27 @@ def language(req):
     return redirect(req.GET.get("currentPage"))
 
 
+
+def startJob(req):
+    global isJobStarted
+    if(not isJobStarted):
+        print("IT WILL START JOB")
+        global job
+        job = scheduler.add_job(tick,'interval', seconds=600)
+        try:
+            isJobStarted = True
+            scheduler.start()
+        except:
+            pass
+    return HttpResponseRedirect('/')
+    
+
+
+            
+
 urlpatterns = [
     url(r'admin/', admin.site.urls),
+    url('startemailjob/',startJob,name = "startJob"),
     url('users/', include("users.userRoutes")),
     url("articles/",include("article.articleRoutes")),
     url("todos/",include("todo.todoRoutes")),
@@ -205,17 +223,8 @@ def tick():
 
         # print("Time to : ",todo.content)
 
-def start_job():
-    global isJobStarted
-    if(not isJobStarted):
-        print("IT WILL START JOB")
-        global job
-        job = scheduler.add_job(tick,'interval', seconds=600)
-        try:
-            isJobStarted = True
-            scheduler.start()
-        except:
-            pass
+
+
 
 
 

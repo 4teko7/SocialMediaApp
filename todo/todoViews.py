@@ -93,6 +93,35 @@ def editTodo(req,id):
 
 
 @login_required(login_url="/users/login/")
+def addOneDay(req,id):
+    from .todoLang import lang2
+    todo = Todo.objects.get(id = id)
+    todoDay = str(todo.date)[8:11]
+    datt = str(todo.date)[0:8] + str((int(todoDay) + 1) % 24) + str(todo.date)[10:len(str(todo.date))]
+    todo.date = datt
+    todo.iscompleted = False
+    todo.isEmailSent = False
+    todo.save()
+    messages.success(req,lang2['successfull'])
+
+    return HttpResponseRedirect('/todos/mytodos/')
+
+@login_required(login_url="/users/login/")
+def addOneHour(req,id):
+    from .todoLang import lang2
+    todo = Todo.objects.get(id = id)
+    todoHour = (int(str(todo.date)[len(str(todo.date))-14:len(str(todo.date))-12])) % 24
+    datt = str(todo.date)[0:11] + str((todoHour + 1) % 24) + str(todo.date)[len(str(todo.date))-12:len(str(todo.date))]
+    todo.date = datt
+    todo.iscompleted = False
+    todo.isEmailSent = False
+    todo.save()
+    messages.success(req,lang2['successfull'])
+
+    return HttpResponseRedirect('/todos/mytodos/')
+
+
+@login_required(login_url="/users/login/")
 def myTodos(req):
 
     form = addTodoForm()

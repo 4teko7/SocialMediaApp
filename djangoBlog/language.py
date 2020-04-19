@@ -89,6 +89,9 @@ tr = {
     'fullname':'Isminizi Giriniz.',
     'cantedit':'Sizin Olmayan Makaleyi Düzenleyemezsiniz !',
     "noUser":"Kullanıcı Bulunamadı.",
+    "oneHour":"1 Saat Ertele",
+    "oneDay":"1 Gün Ertele",
+    "successfull":"Başarılı",
 
 
 }
@@ -189,6 +192,11 @@ en = {
     'fullname':'Full Name',
     'formInvalid':"Form is Invalid",
     "noUser":"User Not Found",
+    "oneHour":"Add 1 Hour",
+    "oneDay":"Add 1 Day",
+    "successfull":"Successfull",
+
+
 
 }
 
